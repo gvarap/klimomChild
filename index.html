@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Child Nutrition Calculator | Klimom</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                background: #fafafa;
+                color: #2d2d2d;
+                line-height: 1.6;
+                padding: 20px;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+
+            .card {
+                background: white;
+                border-radius: 16px;
+                padding: 32px 24px;
+                box-shadow:
+                    0 2px 8px rgba(0, 0, 0, 0.08),
+                    0 0 0 1px rgba(0, 0, 0, 0.04);
+                margin-bottom: 20px;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 32px;
+            }
+
+            .logo {
+                font-size: 28px;
+                font-weight: 700;
+                color: #2d8659;
+                margin-bottom: 8px;
+            }
+
+            .child-icon {
+                font-size: 48px;
+                margin-bottom: 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+                font-weight: 700;
+                color: #1a1a1a;
+                margin-bottom: 8px;
+                line-height: 1.3;
+            }
+
+            .subtitle {
+                font-size: 15px;
+                color: #666;
+                font-weight: 400;
+            }
+
+            .form-group {
+                margin-bottom: 24px;
+            }
+
+            label {
+                display: block;
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 8px;
+            }
+
+            input {
+                width: 100%;
+                padding: 14px 16px;
+                font-size: 16px;
+                border: 1.5px solid #e0e0e0;
+                border-radius: 10px;
+                background: #fafafa;
+                color: #2d2d2d;
+                transition: all 0.2s;
+                font-family: inherit;
+            }
+
+            input:focus {
+                outline: none;
+                border-color: #2d8659;
+                background: white;
+                box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.1);
+            }
+
+            .btn {
+                width: 100%;
+                padding: 16px;
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-family: inherit;
+                text-decoration: none;
+                display: inline-block;
+                text-align: center;
+            }
+
+            .btn-primary {
+                background: #2d8659;
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background: #246f48;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3);
+            }
+
+            .btn-whatsapp {
+                background: #25d366;
+                color: white;
+                margin-top: 16px;
+            }
+
+            .btn-whatsapp:hover {
+                background: #1faa52;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            }
+
+            .btn-whatsapp::before {
+                content: "💬 ";
+                margin-right: 6px;
+            }
+
+            .results {
+                background: linear-gradient(135deg, #fff8e1 0%, #ffe0b2 100%);
+                border-radius: 12px;
+                padding: 24px;
+                margin-top: 24px;
+                border: 2px solid #ffd54f;
+            }
+
+            .result-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #e65100;
+                margin-bottom: 16px;
+                text-align: center;
+            }
+
+            .result-highlight {
+                background: white;
+                border-radius: 10px;
+                padding: 16px;
+                text-align: center;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 6px rgba(230, 81, 0, 0.1);
+            }
+
+            .result-highlight-label {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 6px;
+            }
+
+            .result-highlight-value {
+                font-size: 32px;
+                font-weight: 700;
+                color: #e65100;
+            }
+
+            .nutrient-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .nutrient-card {
+                background: white;
+                border-radius: 10px;
+                padding: 14px;
+                text-align: center;
+                box-shadow: 0 2px 6px rgba(230, 81, 0, 0.1);
+            }
+
+            .nutrient-name {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 6px;
+            }
+
+            .nutrient-value {
+                font-size: 20px;
+                font-weight: 700;
+                color: #e65100;
+            }
+
+            .age-indicator {
+                background: #2d8659;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 600;
+                display: inline-block;
+                margin-bottom: 16px;
+            }
+
+            .info-box {
+                background: #e8f5e9;
+                border-left: 4px solid #2d8659;
+                padding: 16px;
+                border-radius: 8px;
+                margin-top: 24px;
+                font-size: 14px;
+                line-height: 1.6;
+                color: #1b5e20;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .microcopy {
+                text-align: center;
+                font-size: 13px;
+                color: #999;
+                margin-top: 12px;
+            }
+
+            .error {
+                color: #d32f2f;
+                font-size: 13px;
+                margin-top: 6px;
+            }
+
+            @media (max-width: 480px) {
+                .card {
+                    padding: 24px 20px;
+                }
+
+                h1 {
+                    font-size: 22px;
+                }
+
+                .result-highlight-value {
+                    font-size: 28px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Lead Capture Form -->
+            <div id="leadForm" class="card">
+                <div class="header">
+                    <div class="logo">Klimom</div>
+                    <div class="child-icon">👶</div>
+                    <h1>Child Nutrition Calculator</h1>
+                    <p class="subtitle">
+                        Discover your child's ideal A2 milk intake
+                    </p>
+                </div>
+
+                <form id="leadCaptureForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            required
+                            placeholder="Enter your name"
+                            data-testid="lead-name-input"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            required
+                            pattern="[0-9]{10}"
+                            placeholder="10-digit mobile number"
+                            data-testid="lead-phone-input"
+                        />
+                        <div id="phoneError" class="error hidden">
+                            Please enter a valid 10-digit phone number
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        data-testid="lead-submit-button"
+                    >
+                        Continue to Calculator
+                    </button>
+                    <p class="microcopy">
+                        Takes 10 seconds • No commitment required
+                    </p>
+                </form>
+            </div>
+
+            <!-- Calculator -->
+            <div id="calculator" class="card hidden">
+                <div class="header">
+                    <div class="logo">Klimom</div>
+                    <div class="child-icon">👶</div>
+                    <h1>Child Nutrition Calculator</h1>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Child's Age (Years)</label>
+                    <input
+                        type="number"
+                        id="age"
+                        min="1"
+                        max="13"
+                        value="5"
+                        data-testid="age-input"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">Child's Weight (kg)</label>
+                    <input
+                        type="number"
+                        id="weight"
+                        min="5"
+                        max="100"
+                        value="18"
+                        data-testid="weight-input"
+                    />
+                </div>
+
+                <div id="results" class="results" data-testid="results-section">
+                    <div style="text-align: center">
+                        <span
+                            class="age-indicator"
+                            id="ageGroup"
+                            data-testid="age-group"
+                            >4-8 years</span
+                        >
+                    </div>
+
+                    <div class="result-title">
+                        Recommended Daily A2 Milk Intake
+                    </div>
+
+                    <div class="result-highlight">
+                        <div class="result-highlight-label">
+                            Daily Requirement
+                        </div>
+                        <div
+                            class="result-highlight-value"
+                            id="milkIntake"
+                            data-testid="milk-intake"
+                        >
+                            450 ml
+                        </div>
+                    </div>
+
+                    <div
+                        class="result-title"
+                        style="margin-top: 20px; margin-bottom: 12px"
+                    >
+                        Estimated Daily Nutrients
+                    </div>
+
+                    <div class="nutrient-grid">
+                        <div class="nutrient-card">
+                            <div class="nutrient-name">Protein</div>
+                            <div
+                                class="nutrient-value"
+                                id="protein"
+                                data-testid="protein"
+                            >
+                                14g
+                            </div>
+                        </div>
+                        <div class="nutrient-card">
+                            <div class="nutrient-name">Calcium</div>
+                            <div
+                                class="nutrient-value"
+                                id="calcium"
+                                data-testid="calcium"
+                            >
+                                540mg
+                            </div>
+                        </div>
+                        <div class="nutrient-card">
+                            <div class="nutrient-name">Vitamin A</div>
+                            <div
+                                class="nutrient-value"
+                                id="vitaminA"
+                                data-testid="vitamin-a"
+                            >
+                                180μg
+                            </div>
+                        </div>
+                        <div class="nutrient-card">
+                            <div class="nutrient-name">Vitamin D</div>
+                            <div
+                                class="nutrient-value"
+                                id="vitaminD"
+                                data-testid="vitamin-d"
+                            >
+                                1.8μg
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    A2 milk is easier to digest and helps build strong bones and
+                    immunity. Perfect for your growing child's daily nutrition
+                    needs.
+                </div>
+
+                <a
+                    href="#"
+                    id="whatsappBtn"
+                    class="btn btn-whatsapp"
+                    target="_blank"
+                    data-testid="whatsapp-button"
+                    >Give Your Child Better Milk</a
+                >
+            </div>
+        </div>
+
+        <script>
+            // Configuration - REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+            const GOOGLE_SCRIPT_URL =
+                "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
+            const WHATSAPP_BASE_URL =
+                "https://api.whatsapp.com/send/?phone=919100741305";
+
+            // Lead capture
+            document
+                .getElementById("leadCaptureForm")
+                .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    const name = document.getElementById("name").value.trim();
+                    const phone = document.getElementById("phone").value.trim();
+                    const phoneError = document.getElementById("phoneError");
+
+                    // Validate phone
+                    if (!/^[0-9]{10}$/.test(phone)) {
+                        phoneError.classList.remove("hidden");
+                        return;
+                    }
+                    phoneError.classList.add("hidden");
+
+                    // Send to Google Sheets
+                    try {
+                        await fetch(GOOGLE_SCRIPT_URL, {
+                            method: "POST",
+                            mode: "no-cors",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                name: name,
+                                phone: phone,
+                                calculatorType: "Child Nutrition Calculator",
+                            }),
+                        });
+
+                        // Store in localStorage
+                        localStorage.setItem("userName", name);
+                        localStorage.setItem("userPhone", phone);
+
+                        // Show calculator
+                        document
+                            .getElementById("leadForm")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("calculator")
+                            .classList.remove("hidden");
+
+                        // Calculate initial values
+                        calculateNutrition();
+                    } catch (error) {
+                        console.error("Error:", error);
+                        document
+                            .getElementById("leadForm")
+                            .classList.add("hidden");
+                        document
+                            .getElementById("calculator")
+                            .classList.remove("hidden");
+                        calculateNutrition();
+                    }
+                });
+
+            // Calculator logic
+            function calculateNutrition() {
+                const age = parseInt(document.getElementById("age").value) || 5;
+                const weight =
+                    parseFloat(document.getElementById("weight").value) || 18;
+
+                let milkIntake = 0;
+                let ageGroup = "";
+
+                // Determine milk intake based on age
+                if (age >= 1 && age <= 3) {
+                    milkIntake = 350; // ml
+                    ageGroup = "1-3 years";
+                } else if (age >= 4 && age <= 8) {
+                    milkIntake = 450; // ml
+                    ageGroup = "4-8 years";
+                } else if (age >= 9 && age <= 13) {
+                    milkIntake = 600; // ml
+                    ageGroup = "9-13 years";
+                } else {
+                    milkIntake = 400; // default
+                    ageGroup = `${age} years`;
+                }
+
+                // Calculate nutrients (approximate per 100ml of A2 milk)
+                // Protein: ~3.2g/100ml, Calcium: ~120mg/100ml, Vit A: ~40μg/100ml, Vit D: ~0.4μg/100ml
+                const protein = ((milkIntake / 100) * 3.2).toFixed(1);
+                const calcium = Math.round((milkIntake / 100) * 120);
+                const vitaminA = Math.round((milkIntake / 100) * 40);
+                const vitaminD = ((milkIntake / 100) * 0.4).toFixed(1);
+
+                // Update UI
+                document.getElementById("ageGroup").textContent = ageGroup;
+                document.getElementById("milkIntake").textContent =
+                    `${milkIntake} ml`;
+                document.getElementById("protein").textContent = `${protein}g`;
+                document.getElementById("calcium").textContent = `${calcium}mg`;
+                document.getElementById("vitaminA").textContent =
+                    `${vitaminA}μg`;
+                document.getElementById("vitaminD").textContent =
+                    `${vitaminD}μg`;
+
+                // Update WhatsApp link
+                updateWhatsAppLink(age, weight, milkIntake, ageGroup);
+            }
+
+            function updateWhatsAppLink(age, weight, milkIntake, ageGroup) {
+                const name = localStorage.getItem("userName") || "there";
+                const message = `Hi, I'm ${name}. My child (${age} years, ${weight}kg) needs ${milkIntake}ml of A2 milk daily according to your nutrition calculator. I'd like to know more about A2 milk for kids.`;
+                const encodedMessage = encodeURIComponent(message);
+                document.getElementById("whatsappBtn").href =
+                    `${WHATSAPP_BASE_URL}&text=${encodedMessage}`;
+            }
+
+            // Real-time calculation
+            document
+                .getElementById("age")
+                .addEventListener("input", calculateNutrition);
+            document
+                .getElementById("weight")
+                .addEventListener("input", calculateNutrition);
+        </script>
+    </body>
+</html>
