@@ -1,596 +1,595 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Child Nutrition Calculator | Klimom</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Child Nutrition Calculator | Klimom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-            body {
-                font-family:
-                    "Inter",
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    "Segoe UI",
-                    sans-serif;
-                background: #fafafa;
-                color: #2d2d2d;
-                line-height: 1.6;
-                padding: 20px;
-                min-height: 100vh;
-            }
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #fafafa;
+            color: #2d2d2d;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-            .container {
-                max-width: 480px;
-                margin: 0 auto;
-            }
+        .container { max-width: 480px; margin: 0 auto; }
 
-            .card {
-                background: white;
-                border-radius: 16px;
-                padding: 32px 24px;
-                box-shadow:
-                    0 2px 8px rgba(0, 0, 0, 0.08),
-                    0 0 0 1px rgba(0, 0, 0, 0.04);
-                margin-bottom: 20px;
-            }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
 
-            .header {
-                text-align: center;
-                margin-bottom: 32px;
-            }
+        .header { text-align: center; margin-bottom: 32px; }
+        .logo { font-size: 28px; font-weight: 700; color: #2d8659; margin-bottom: 8px; }
+        .child-icon { font-size: 48px; margin-bottom: 12px; }
 
-            .logo {
-                font-size: 28px;
-                font-weight: 700;
-                color: #2d8659;
-                margin-bottom: 8px;
-            }
+        h1 {
+            font-size: 24px; font-weight: 700; color: #1a1a1a;
+            margin-bottom: 8px; line-height: 1.3;
+        }
 
-            .child-icon {
-                font-size: 48px;
-                margin-bottom: 12px;
-            }
+        .subtitle { font-size: 15px; color: #666; font-weight: 400; }
 
-            h1 {
-                font-size: 24px;
-                font-weight: 700;
-                color: #1a1a1a;
-                margin-bottom: 8px;
-                line-height: 1.3;
-            }
+        .form-group { margin-bottom: 24px; }
 
-            .subtitle {
-                font-size: 15px;
-                color: #666;
-                font-weight: 400;
-            }
+        label {
+            display: block; font-size: 14px;
+            font-weight: 600; color: #333; margin-bottom: 8px;
+        }
 
-            .form-group {
-                margin-bottom: 24px;
-            }
+        input {
+            width: 100%; padding: 14px 16px; font-size: 16px;
+            border: 1.5px solid #e0e0e0; border-radius: 10px;
+            background: #fafafa; color: #2d2d2d;
+            transition: all 0.2s; font-family: inherit;
+        }
 
-            label {
-                display: block;
-                font-size: 14px;
-                font-weight: 600;
-                color: #333;
-                margin-bottom: 8px;
-            }
+        input:focus {
+            outline: none; border-color: #2d8659;
+            background: white; box-shadow: 0 0 0 3px rgba(45,134,89,0.1);
+        }
 
-            input {
-                width: 100%;
-                padding: 14px 16px;
-                font-size: 16px;
-                border: 1.5px solid #e0e0e0;
-                border-radius: 10px;
-                background: #fafafa;
-                color: #2d2d2d;
-                transition: all 0.2s;
-                font-family: inherit;
-            }
+        .btn {
+            width: 100%; padding: 16px; font-size: 16px; font-weight: 600;
+            border: none; border-radius: 12px; cursor: pointer;
+            transition: all 0.3s ease; font-family: inherit;
+            text-decoration: none; display: inline-block; text-align: center;
+        }
 
-            input:focus {
-                outline: none;
-                border-color: #2d8659;
-                background: white;
-                box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.1);
-            }
+        .btn-primary { background: #2d8659; color: white; }
+        .btn-primary:hover {
+            background: #246f48; transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45,134,89,0.3);
+        }
 
-            .btn {
-                width: 100%;
-                padding: 16px;
-                font-size: 16px;
-                font-weight: 600;
-                border: none;
-                border-radius: 12px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                font-family: inherit;
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-            }
+        .btn-calculate { background: #2d8659; color: white; margin-top: 8px; }
+        .btn-calculate:hover {
+            background: #246f48; transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45,134,89,0.3);
+        }
 
-            .btn-primary {
-                background: #2d8659;
-                color: white;
-            }
+        .btn-whatsapp { background: #25d366; color: white; margin-top: 16px; }
+        .btn-whatsapp:hover {
+            background: #1faa52; transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+        }
+        .btn-whatsapp::before { content: "💬 "; margin-right: 6px; }
 
-            .btn-primary:hover {
-                background: #246f48;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3);
-            }
+        .weight-status-card {
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            text-align: center;
+            border: 2px solid;
+        }
 
-            .btn-calculate {
-                background: #2d8659;
-                color: white;
-                margin-top: 8px;
-            }
+        .weight-status-card.underweight {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-color: #ff9800;
+        }
 
-            .btn-calculate:hover {
-                background: #246f48;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3);
-            }
+        .weight-status-card.healthy {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-color: #4caf50;
+        }
 
-            .btn-whatsapp {
-                background: #25d366;
-                color: white;
-                margin-top: 16px;
-            }
+        .weight-status-card.overweight {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            border-color: #e91e63;
+        }
 
-            .btn-whatsapp:hover {
-                background: #1faa52;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-            }
+        .weight-status-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-            .btn-whatsapp::before {
-                content: "💬 ";
-                margin-right: 6px;
-            }
+        .weight-status-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
 
-            .results {
-                background: linear-gradient(135deg, #fff8e1 0%, #ffe0b2 100%);
-                border-radius: 12px;
-                padding: 24px;
-                margin-top: 24px;
-                border: 2px solid #ffd54f;
-            }
+        .underweight .weight-status-badge { background: #ff9800; color: white; }
+        .healthy .weight-status-badge     { background: #4caf50; color: white; }
+        .overweight .weight-status-badge  { background: #e91e63; color: white; }
 
-            .result-title {
-                font-size: 18px;
-                font-weight: 700;
-                color: #e65100;
-                margin-bottom: 16px;
-                text-align: center;
-            }
+        .weight-row {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 12px;
+            gap: 8px;
+        }
 
-            .result-highlight {
-                background: white;
-                border-radius: 10px;
-                padding: 16px;
-                text-align: center;
-                margin-bottom: 20px;
-                box-shadow: 0 2px 6px rgba(230, 81, 0, 0.1);
-            }
+        .weight-stat {
+            background: white;
+            border-radius: 10px;
+            padding: 10px 14px;
+            flex: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
 
-            .result-highlight-label {
-                font-size: 13px;
-                color: #666;
-                margin-bottom: 6px;
-            }
+        .weight-stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+        .weight-stat-value { font-size: 18px; font-weight: 700; color: #2d2d2d; }
 
-            .result-highlight-value {
-                font-size: 32px;
-                font-weight: 700;
-                color: #e65100;
-            }
+        .weight-message {
+            font-size: 13px;
+            color: #555;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
 
-            .nutrient-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
+        .weight-bar-wrap {
+            background: #eee;
+            border-radius: 10px;
+            height: 10px;
+            margin: 14px 0 6px;
+            overflow: hidden;
+            position: relative;
+        }
 
-            .nutrient-card {
-                background: white;
-                border-radius: 10px;
-                padding: 14px;
-                text-align: center;
-                box-shadow: 0 2px 6px rgba(230, 81, 0, 0.1);
-            }
+        .weight-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
 
-            .nutrient-name {
-                font-size: 13px;
-                color: #666;
-                margin-bottom: 6px;
-            }
+        .weight-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #aaa;
+        }
 
-            .nutrient-value {
-                font-size: 20px;
-                font-weight: 700;
-                color: #e65100;
-            }
+        .results {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffe0b2 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 2px solid #ffd54f;
+        }
 
-            .age-indicator {
-                background: #2d8659;
-                color: white;
-                padding: 8px 16px;
-                border-radius: 20px;
-                font-size: 14px;
-                font-weight: 600;
-                display: inline-block;
-                margin-bottom: 16px;
-            }
+        .result-title {
+            font-size: 18px; font-weight: 700; color: #e65100;
+            margin-bottom: 16px; text-align: center;
+        }
 
-            .info-box {
-                background: #e8f5e9;
-                border-left: 4px solid #2d8659;
-                padding: 16px;
-                border-radius: 8px;
-                margin-top: 24px;
-                font-size: 14px;
-                line-height: 1.6;
-                color: #1b5e20;
-            }
+        .result-highlight {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(230,81,0,0.1);
+        }
 
-            .hidden {
-                display: none;
-            }
+        .result-highlight-label { font-size: 13px; color: #666; margin-bottom: 6px; }
+        .result-highlight-value { font-size: 32px; font-weight: 700; color: #e65100; }
 
-            .microcopy {
-                text-align: center;
-                font-size: 13px;
-                color: #999;
-                margin-top: 12px;
-            }
+        .nutrient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-            .error {
-                color: #d32f2f;
-                font-size: 13px;
-                margin-top: 6px;
-            }
+        .nutrient-card {
+            background: white; border-radius: 10px; padding: 14px;
+            text-align: center; box-shadow: 0 2px 6px rgba(230,81,0,0.1);
+        }
 
-            .input-hint {
-                font-size: 13px;
-                color: #999;
-                margin-top: 6px;
-            }
+        .nutrient-name { font-size: 13px; color: #666; margin-bottom: 6px; }
+        .nutrient-value { font-size: 20px; font-weight: 700; color: #e65100; }
 
-            /* Success toast */
-            .toast {
-                position: fixed;
-                bottom: 24px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #2d8659;
-                color: white;
-                padding: 12px 24px;
-                border-radius: 24px;
-                font-size: 14px;
-                font-weight: 600;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                z-index: 1000;
-                transition: opacity 0.4s ease;
-            }
+        .age-indicator {
+            background: #2d8659; color: white; padding: 8px 16px;
+            border-radius: 20px; font-size: 14px; font-weight: 600;
+            display: inline-block; margin-bottom: 16px;
+        }
 
-            @media (max-width: 480px) {
-                .card {
-                    padding: 24px 20px;
-                }
+        .info-box {
+            background: #e8f5e9; border-left: 4px solid #2d8659;
+            padding: 16px; border-radius: 8px; margin-top: 24px;
+            font-size: 14px; line-height: 1.6; color: #1b5e20;
+        }
 
-                h1 {
-                    font-size: 22px;
-                }
+        .hidden { display: none; }
 
-                .result-highlight-value {
-                    font-size: 28px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
+        .microcopy { text-align: center; font-size: 13px; color: #999; margin-top: 12px; }
+        .error { color: #d32f2f; font-size: 13px; margin-top: 6px; }
+        .input-hint { font-size: 13px; color: #999; margin-top: 6px; }
 
-            <!-- Lead Capture Form -->
-            <div id="leadForm" class="card">
-                <div class="header">
-                    <div class="logo">Klimom</div>
-                    <div class="child-icon">👶</div>
-                    <h1>Child Nutrition Calculator</h1>
-                    <p class="subtitle">
-                        Discover your child's ideal A2 milk intake
-                    </p>
-                </div>
+        .toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background: #2d8659; color: white; padding: 12px 24px;
+            border-radius: 24px; font-size: 14px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;
+            transition: opacity 0.4s ease;
+        }
 
-                <form id="leadCaptureForm">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            required
-                            placeholder="Enter your name"
-                        />
-                    </div>
+        @media (max-width: 480px) {
+            .card { padding: 24px 20px; }
+            h1 { font-size: 22px; }
+            .result-highlight-value { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
 
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input
-                            type="tel"
-                            id="phone"
-                            required
-                            placeholder="10-digit mobile number"
-                        />
-                        <div id="phoneError" class="error hidden">
-                            Please enter a valid 10-digit phone number
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Continue to Calculator
-                    </button>
-                    <p class="microcopy">Takes 10 seconds • No commitment required</p>
-                </form>
+        <!-- Lead Capture Form -->
+        <div id="leadForm" class="card">
+            <div class="header">
+                <div class="logo">Klimom</div>
+                <div class="child-icon">👶</div>
+                <h1>Child Nutrition Calculator</h1>
+                <p class="subtitle">Discover your child's ideal A2 milk intake</p>
             </div>
 
-            <!-- Calculator -->
-            <div id="calculator" class="card hidden">
-                <div class="header">
-                    <div class="logo">Klimom</div>
-                    <div class="child-icon">👶</div>
-                    <h1>Child Nutrition Calculator</h1>
-                    <p class="subtitle">Enter your child's details below</p>
+            <form id="leadCaptureForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required placeholder="Enter your name" />
                 </div>
 
                 <div class="form-group">
-                    <label for="age">Child's Age (Years)</label>
-                    <input
-                        type="number"
-                        id="age"
-                        min="1"
-                        max="13"
-                        placeholder="e.g. 5"
-                    />
-                    <p class="input-hint">Supported range: 1 – 13 years</p>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="Enter your email" />
+                    <div id="emailError" class="error hidden">Please enter a valid email address</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="weight">Child's Weight (kg)</label>
-                    <input
-                        type="number"
-                        id="weight"
-                        min="5"
-                        max="100"
-                        placeholder="e.g. 18"
-                    />
+                    <label for="phone">WhatsApp Number</label>
+                    <input type="tel" id="phone" required placeholder="WhatsApp number — we'll send your report here" />
+                    <div id="phoneError" class="error hidden">Please enter a valid 10-digit WhatsApp number</div>
                 </div>
 
-                <div id="calcError" class="error hidden" style="margin-bottom: 12px;">
-                    Please enter both age and weight before calculating.
-                </div>
-
-                <button class="btn btn-calculate" onclick="handleCalculate()">
-                    🧮 Calculate Nutrition
-                </button>
-
-                <!-- Results — hidden until button clicked -->
-                <div id="results" class="results hidden">
-                    <div style="text-align: center">
-                        <span class="age-indicator" id="ageGroup">4-8 years</span>
-                    </div>
-
-                    <div class="result-title">Recommended Daily A2 Milk Intake</div>
-
-                    <div class="result-highlight">
-                        <div class="result-highlight-label">Daily Requirement</div>
-                        <div class="result-highlight-value" id="milkIntake">450 ml</div>
-                    </div>
-
-                    <div class="result-title" style="margin-top: 20px; margin-bottom: 12px;">
-                        Estimated Daily Nutrients
-                    </div>
-
-                    <div class="nutrient-grid">
-                        <div class="nutrient-card">
-                            <div class="nutrient-name">Protein</div>
-                            <div class="nutrient-value" id="protein">14g</div>
-                        </div>
-                        <div class="nutrient-card">
-                            <div class="nutrient-name">Calcium</div>
-                            <div class="nutrient-value" id="calcium">540mg</div>
-                        </div>
-                        <div class="nutrient-card">
-                            <div class="nutrient-name">Vitamin A</div>
-                            <div class="nutrient-value" id="vitaminA">180μg</div>
-                        </div>
-                        <div class="nutrient-card">
-                            <div class="nutrient-name">Vitamin D</div>
-                            <div class="nutrient-value" id="vitaminD">1.8μg</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="infoBox" class="info-box hidden">
-                    A2 milk is easier to digest and helps build strong bones and
-                    immunity. Perfect for your growing child's daily nutrition needs.
-                </div>
-
-                <a
-                    href="#"
-                    id="whatsappBtn"
-                    class="btn btn-whatsapp hidden"
-                    target="_blank"
-                >Give Your Child Better Milk</a>
-            </div>
+                <button type="submit" class="btn btn-primary">Continue to Calculator</button>
+                <p class="microcopy">Takes 10 seconds • No commitment required</p>
+            </form>
         </div>
 
-        <script>
-            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
-            const WHATSAPP_BASE_URL = "https://api.whatsapp.com/send/?phone=919100741305";
+        <!-- Calculator -->
+        <div id="calculator" class="card hidden">
+            <div class="header">
+                <div class="logo">Klimom</div>
+                <div class="child-icon">👶</div>
+                <h1>Child Nutrition Calculator</h1>
+                <p class="subtitle">Enter your child's details below</p>
+            </div>
 
-            // ── Step 1: Lead capture ──────────────────────────────────────
-            document.getElementById("leadCaptureForm").addEventListener("submit", async (e) => {
-                e.preventDefault();
+            <div class="form-group">
+                <label for="age">Child's Age (Years)</label>
+                <input type="number" id="age" min="1" max="13" placeholder="e.g. 5" />
+                <p class="input-hint">Supported range: 1 – 13 years</p>
+            </div>
 
-                const name = document.getElementById("name").value.trim();
-                const phone = document.getElementById("phone").value.trim();
-                const phoneError = document.getElementById("phoneError");
+            <div class="form-group">
+                <label for="weight">Child's Weight (kg)</label>
+                <input type="number" id="weight" min="5" max="100" placeholder="e.g. 18" />
+            </div>
 
-                if (!/^[0-9]{10}$/.test(phone)) {
-                    phoneError.classList.remove("hidden");
-                    return;
-                }
-                phoneError.classList.add("hidden");
+            <div id="calcError" class="error hidden" style="margin-bottom: 12px;"></div>
 
-                // Send lead to Sheets
-                try {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            type: "lead",
-                            name: name,
-                            phone: phone,
-                            calculatorType: "Child Nutrition Calculator",
-                        }),
-                    });
-                } catch (err) {
-                    console.error("Lead capture error:", err);
-                }
+            <button class="btn btn-calculate" onclick="handleCalculate()">
+                🧮 Calculate Nutrition
+            </button>
 
-                // Save locally and show calculator
-                localStorage.setItem("userName", name);
-                localStorage.setItem("userPhone", phone);
+            <!-- Weight Status -->
+            <div id="weightStatus" class="weight-status-card hidden">
+                <div class="weight-status-title">Weight Status for Age</div>
+                <div class="weight-status-badge" id="weightBadge">Healthy</div>
 
-                document.getElementById("leadForm").classList.add("hidden");
-                document.getElementById("calculator").classList.remove("hidden");
+                <div class="weight-bar-wrap">
+                    <div class="weight-bar-fill" id="weightBarFill"></div>
+                </div>
+                <div class="weight-bar-labels">
+                    <span>Underweight</span>
+                    <span>Healthy</span>
+                    <span>Overweight</span>
+                </div>
+
+                <div class="weight-row">
+                    <div class="weight-stat">
+                        <div class="weight-stat-label">Your Child</div>
+                        <div class="weight-stat-value" id="actualWeight">—</div>
+                    </div>
+                    <div class="weight-stat">
+                        <div class="weight-stat-label">Ideal for Age</div>
+                        <div class="weight-stat-value" id="idealWeight">—</div>
+                    </div>
+                    <div class="weight-stat">
+                        <div class="weight-stat-label">Difference</div>
+                        <div class="weight-stat-value" id="weightDiff">—</div>
+                    </div>
+                </div>
+
+                <p class="weight-message" id="weightMessage"></p>
+            </div>
+
+            <!-- Milk Intake Results -->
+            <div id="results" class="results hidden">
+                <div style="text-align: center">
+                    <span class="age-indicator" id="ageGroup">4-8 years</span>
+                </div>
+
+                <div class="result-title">Recommended Daily A2 Milk Intake</div>
+
+                <div class="result-highlight">
+                    <div class="result-highlight-label">Daily Requirement</div>
+                    <div class="result-highlight-value" id="milkIntake">450 ml</div>
+                </div>
+
+                <div class="result-title" style="margin-top: 20px; margin-bottom: 12px;">
+                    Estimated Daily Nutrients
+                </div>
+
+                <div class="nutrient-grid">
+                    <div class="nutrient-card">
+                        <div class="nutrient-name">Protein</div>
+                        <div class="nutrient-value" id="protein">14g</div>
+                    </div>
+                    <div class="nutrient-card">
+                        <div class="nutrient-name">Calcium</div>
+                        <div class="nutrient-value" id="calcium">540mg</div>
+                    </div>
+                    <div class="nutrient-card">
+                        <div class="nutrient-name">Vitamin A</div>
+                        <div class="nutrient-value" id="vitaminA">180μg</div>
+                    </div>
+                    <div class="nutrient-card">
+                        <div class="nutrient-name">Vitamin D</div>
+                        <div class="nutrient-value" id="vitaminD">1.8μg</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infoBox" class="info-box hidden">
+                A2 milk is easier to digest and helps build strong bones and
+                immunity. Perfect for your growing child's daily nutrition needs.
+            </div>
+
+            <a href="#" id="whatsappBtn" class="btn btn-whatsapp hidden" target="_blank">
+                Give Your Child Better Milk
+            </a>
+        </div>
+    </div>
+
+    <script>
+        var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
+        var WHATSAPP_BASE_URL = "https://api.whatsapp.com/send/?phone=919100741305";
+
+        // In-memory only — no localStorage, safe for Shopify
+        var userData = { name: "", email: "", phone: "" };
+
+        var WHO_IDEAL_WEIGHT = {
+            1: 9.6,  2: 12.0, 3: 14.0, 4: 16.0,  5: 18.0,
+            6: 20.0, 7: 22.5, 8: 25.0, 9: 28.0,  10: 31.5,
+            11: 35.5, 12: 39.5, 13: 43.5
+        };
+
+        // Lead capture — store in memory, do NOT send to Sheets yet
+        document.getElementById("leadCaptureForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            var name  = document.getElementById("name").value.trim();
+            var email = document.getElementById("email").value.trim();
+            var phone = document.getElementById("phone").value.trim();
+            var valid = true;
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById("emailError").classList.remove("hidden");
+                valid = false;
+            } else {
+                document.getElementById("emailError").classList.add("hidden");
+            }
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+                document.getElementById("phoneError").classList.remove("hidden");
+                valid = false;
+            } else {
+                document.getElementById("phoneError").classList.add("hidden");
+            }
+
+            if (!valid) return;
+
+            userData.name  = name;
+            userData.email = email;
+            userData.phone = phone;
+
+            document.getElementById("leadForm").classList.add("hidden");
+            document.getElementById("calculator").classList.remove("hidden");
+        });
+
+        // Calculate — sends ONE row to Sheets with everything
+        function handleCalculate() {
+            var ageVal    = document.getElementById("age").value;
+            var weightVal = document.getElementById("weight").value;
+            var calcError = document.getElementById("calcError");
+
+            if (!ageVal || !weightVal) {
+                calcError.textContent = "Please enter both age and weight before calculating.";
+                calcError.classList.remove("hidden");
+                return;
+            }
+
+            var age    = parseInt(ageVal);
+            var weight = parseFloat(weightVal);
+
+            if (age < 1 || age > 13) {
+                calcError.textContent = "Please enter an age between 1 and 13.";
+                calcError.classList.remove("hidden");
+                return;
+            }
+
+            if (weight < 5 || weight > 100) {
+                calcError.textContent = "Please enter a weight between 5 and 100 kg.";
+                calcError.classList.remove("hidden");
+                return;
+            }
+
+            calcError.classList.add("hidden");
+
+            // Milk intake
+            var milkIntake, ageGroup;
+            if (age >= 1 && age <= 3)      { milkIntake = 350; ageGroup = "1-3 years"; }
+            else if (age >= 4 && age <= 8) { milkIntake = 450; ageGroup = "4-8 years"; }
+            else                           { milkIntake = 600; ageGroup = "9-13 years"; }
+
+            var protein  = ((milkIntake / 100) * 3.2).toFixed(1);
+            var calcium  = Math.round((milkIntake / 100) * 120);
+            var vitaminA = Math.round((milkIntake / 100) * 40);
+            var vitaminD = ((milkIntake / 100) * 0.4).toFixed(1);
+
+            document.getElementById("ageGroup").textContent   = ageGroup;
+            document.getElementById("milkIntake").textContent = milkIntake + " ml";
+            document.getElementById("protein").textContent    = protein + "g";
+            document.getElementById("calcium").textContent    = calcium + "mg";
+            document.getElementById("vitaminA").textContent   = vitaminA + "\u03bcg";
+            document.getElementById("vitaminD").textContent   = vitaminD + "\u03bcg";
+
+            // Weight assessment
+            var idealWeight = WHO_IDEAL_WEIGHT[age];
+            var rawDiff     = weight - idealWeight;
+            var diff        = rawDiff.toFixed(1);
+            var absDiff     = Math.abs(rawDiff).toFixed(1);
+            var lowerBound  = idealWeight * 0.85;
+            var upperBound  = idealWeight * 1.15;
+
+            var status, message, barColor, barPercent;
+
+            if (weight < lowerBound) {
+                status     = "underweight";
+                barColor   = "#ff9800";
+                barPercent = Math.max(10, Math.round((weight / idealWeight) * 50));
+                message    = "Your child is " + absDiff + " kg below the ideal weight for their age. A2 milk daily can help bridge this gap with quality protein and calcium for healthy growth.";
+            } else if (weight > upperBound) {
+                status     = "overweight";
+                barColor   = "#e91e63";
+                barPercent = Math.min(95, Math.round(50 + ((weight - idealWeight) / idealWeight) * 80));
+                message    = "Your child is " + absDiff + " kg above the ideal weight for their age. Focus on balanced nutrition with the right milk portions as recommended.";
+            } else {
+                status     = "healthy";
+                barColor   = "#4caf50";
+                barPercent = Math.round(40 + ((weight - lowerBound) / (upperBound - lowerBound)) * 20);
+                message    = "Great news! Your child's weight is in the healthy range for their age. Keep up the good nutrition habits with daily A2 milk.";
+            }
+
+            var badgeLabels = {
+                underweight: "\u26a0\ufe0f Underweight",
+                healthy:     "\u2705 Healthy Weight",
+                overweight:  "\u26a0\ufe0f Overweight"
+            };
+
+            var statusCard = document.getElementById("weightStatus");
+            statusCard.className = "weight-status-card " + status;
+
+            document.getElementById("weightBadge").textContent   = badgeLabels[status];
+            document.getElementById("actualWeight").textContent  = weight + " kg";
+            document.getElementById("idealWeight").textContent   = idealWeight + " kg";
+            document.getElementById("weightDiff").textContent    = rawDiff > 0 ? "+" + diff + " kg" : diff + " kg";
+            document.getElementById("weightMessage").textContent = message;
+
+            var bar = document.getElementById("weightBarFill");
+            bar.style.width      = barPercent + "%";
+            bar.style.background = barColor;
+
+            statusCard.classList.remove("hidden");
+            document.getElementById("results").classList.remove("hidden");
+            document.getElementById("infoBox").classList.remove("hidden");
+            document.getElementById("whatsappBtn").classList.remove("hidden");
+
+            // WhatsApp link
+            var wMsg = "Hi, I'm " + userData.name + ". My child (" + age + " years, " + weight + "kg) needs " + milkIntake + "ml of A2 milk daily. Weight status: " + badgeLabels[status] + " (ideal: " + idealWeight + "kg). I'd like to know more.";
+            document.getElementById("whatsappBtn").href = WHATSAPP_BASE_URL + "&text=" + encodeURIComponent(wMsg);
+
+            // Send ONE combined row — name + email + phone + all results
+            sendToSheets({
+                age:          age,
+                weight:       weight,
+                ageGroup:     ageGroup,
+                milkIntake:   milkIntake,
+                protein:      protein,
+                calcium:      calcium,
+                vitaminA:     vitaminA,
+                vitaminD:     vitaminD,
+                idealWeight:  idealWeight,
+                weightDiff:   diff,
+                weightStatus: status
             });
 
-            // ── Step 2: Calculate button clicked ─────────────────────────
-            function handleCalculate() {
-                const ageVal = document.getElementById("age").value;
-                const weightVal = document.getElementById("weight").value;
-                const calcError = document.getElementById("calcError");
+            statusCard.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
 
-                // Validate inputs
-                if (!ageVal || !weightVal) {
-                    calcError.classList.remove("hidden");
-                    return;
-                }
-                calcError.classList.add("hidden");
+        // Single fetch — all data in one row
+        function sendToSheets(data) {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method:  "POST",
+                mode:    "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type:           "calculator_result",
+                    name:           userData.name,
+                    email:          userData.email,
+                    phone:          userData.phone,
+                    calculatorType: "Child Nutrition Calculator",
+                    childAge:       data.age,
+                    childWeight:    data.weight,
+                    ageGroup:       data.ageGroup,
+                    milkIntakeMl:   data.milkIntake,
+                    proteinG:       data.protein,
+                    calciumMg:      data.calcium,
+                    vitaminAUg:     data.vitaminA,
+                    vitaminDUg:     data.vitaminD,
+                    idealWeightKg:  data.idealWeight,
+                    weightDiffKg:   data.weightDiff,
+                    weightStatus:   data.weightStatus
+                })
+            })
+            .then(function() {
+                showToast("Results saved!");
+            })
+            .catch(function(err) {
+                console.error("Failed to send data:", err);
+            });
+        }
 
-                const age = parseInt(ageVal);
-                const weight = parseFloat(weightVal);
-
-                if (age < 1 || age > 13) {
-                    calcError.textContent = "Please enter an age between 1 and 13.";
-                    calcError.classList.remove("hidden");
-                    return;
-                }
-
-                // Determine milk intake by age group
-                let milkIntake, ageGroup;
-                if (age >= 1 && age <= 3) {
-                    milkIntake = 350;
-                    ageGroup = "1-3 years";
-                } else if (age >= 4 && age <= 8) {
-                    milkIntake = 450;
-                    ageGroup = "4-8 years";
-                } else {
-                    milkIntake = 600;
-                    ageGroup = "9-13 years";
-                }
-
-                // Calculate nutrients
-                const protein  = ((milkIntake / 100) * 3.2).toFixed(1);
-                const calcium  = Math.round((milkIntake / 100) * 120);
-                const vitaminA = Math.round((milkIntake / 100) * 40);
-                const vitaminD = ((milkIntake / 100) * 0.4).toFixed(1);
-
-                // Update result UI
-                document.getElementById("ageGroup").textContent   = ageGroup;
-                document.getElementById("milkIntake").textContent = `${milkIntake} ml`;
-                document.getElementById("protein").textContent    = `${protein}g`;
-                document.getElementById("calcium").textContent    = `${calcium}mg`;
-                document.getElementById("vitaminA").textContent   = `${vitaminA}μg`;
-                document.getElementById("vitaminD").textContent   = `${vitaminD}μg`;
-
-                // Show results, info box, and WhatsApp button
-                document.getElementById("results").classList.remove("hidden");
-                document.getElementById("infoBox").classList.remove("hidden");
-                document.getElementById("whatsappBtn").classList.remove("hidden");
-
-                // Update WhatsApp link
-                const name = localStorage.getItem("userName") || "there";
-                const message = `Hi, I'm ${name}. My child (${age} years, ${weight}kg) needs ${milkIntake}ml of A2 milk daily according to your nutrition calculator. I'd like to know more about A2 milk for kids.`;
-                document.getElementById("whatsappBtn").href =
-                    `${WHATSAPP_BASE_URL}&text=${encodeURIComponent(message)}`;
-
-                // Send calculator result to Google Sheets
-                sendCalculatorData({ age, weight, ageGroup, milkIntake, protein, calcium, vitaminA, vitaminD });
-
-                // Scroll results into view smoothly
-                document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-
-            // ── Send data to Google Sheets ────────────────────────────────
-            async function sendCalculatorData(data) {
-                const name  = localStorage.getItem("userName") || "";
-                const phone = localStorage.getItem("userPhone") || "";
-
-                try {
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            type: "calculator_result",
-                            name: name,
-                            phone: phone,
-                            calculatorType: "Child Nutrition Calculator",
-                            childAge: data.age,
-                            childWeight: data.weight,
-                            ageGroup: data.ageGroup,
-                            milkIntakeMl: data.milkIntake,
-                            proteinG: data.protein,
-                            calciumMg: data.calcium,
-                            vitaminAUg: data.vitaminA,
-                            vitaminDUg: data.vitaminD,
-                        }),
-                    });
-
-                    showToast("✅ Results saved!");
-                } catch (err) {
-                    console.error("Failed to send calculator data:", err);
-                }
-            }
-
-            // ── Toast notification ────────────────────────────────────────
-            function showToast(message) {
-                const toast = document.createElement("div");
-                toast.className = "toast";
-                toast.textContent = message;
-                document.body.appendChild(toast);
-                setTimeout(() => {
-                    toast.style.opacity = "0";
-                    setTimeout(() => toast.remove(), 400);
-                }, 2500);
-            }
-        </script>
-    </body>
+        function showToast(message) {
+            var toast = document.createElement("div");
+            toast.className   = "toast";
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = "0";
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 2500);
+        }
+    </script>
+</body>
 </html>
-
