@@ -1,595 +1,992 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Child Nutrition Calculator | Klimom</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Child Nutrition Calculator | Klimom — Pure Nourishment for Growing Souls</title>
+<meta name="description" content="Is your child getting enough nutrition? Use Klimom's free Child Nutrition Calculator to find out your child's ideal daily milk intake, protein, calcium & more. Get results on WhatsApp!"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream:#FFF8EE; --warm-white:#FFFDF8; --milk:#F5EDD8;
+  --gold:#E8B84B; --gold-light:#F5D07A; --gold-pale:#FDF3D6;
+  --green:#4A7C59; --green-light:#6BA07A; --green-pale:#EAF4EC;
+  --brown:#7A4F2D; --brown-light:#C4956A;
+  --text-dark:#2C1F0E; --text-mid:#5A3E28; --text-light:#8C7060;
+  --shadow:rgba(122,79,45,0.15);
+  --blue-soft:#D6EAF4;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text-dark);
+  line-height:1.6;
+  overflow-x:hidden;
+}
 
-        body {
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #fafafa;
-            color: #2d2d2d;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
+/* ── BACKGROUND ── */
+.bg-blobs{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(232,184,75,.12),transparent),
+    radial-gradient(ellipse 60% 80% at 85% 80%,rgba(74,124,89,.10),transparent),
+    radial-gradient(ellipse 40% 40% at 50% 50%,rgba(245,208,122,.06),transparent);
+}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);animation:blobFloat 8s ease-in-out infinite alternate;}
+.blob1{width:500px;height:500px;background:rgba(232,184,75,.18);top:-100px;left:-150px;}
+.blob2{width:400px;height:400px;background:rgba(74,124,89,.14);bottom:-80px;right:-100px;animation-delay:-4s;}
+@keyframes blobFloat{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.08) translate(20px,-15px);}}
 
-        .container { max-width: 480px; margin: 0 auto; }
+/* ── TICKER ── */
+.ticker-wrap{
+  background:var(--milk);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  overflow:hidden;padding:12px 0;position:relative;z-index:10;
+}
+.ticker-track{
+  display:flex;gap:60px;white-space:nowrap;
+  animation:tickerScroll 30s linear infinite;
+}
+.ticker-item{font-size:.9rem;color:var(--brown);font-weight:500;}
+@keyframes tickerScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 32px 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
-        }
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  padding:80px 24px 60px;position:relative;z-index:1;
+}
+.brand-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--milk);border:1.5px solid var(--gold);
+  border-radius:40px;padding:8px 20px;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;
+  color:var(--brown);margin-bottom:28px;
+  animation:fadeUp .6s ease both;
+}
+.brand-badge span{font-size:1rem;}
+.hero-emoji{
+  font-size:4rem;display:block;margin-bottom:20px;
+  animation:fadeUp .6s .1s ease both, floatBounce 3s ease-in-out infinite;
+}
+@keyframes floatBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hero h1{
+  font-family:'Playfair Display',serif;font-weight:900;
+  font-size:clamp(2.2rem,6vw,4rem);line-height:1.2;
+  color:var(--text-dark);margin-bottom:20px;
+  animation:fadeUp .6s .15s ease both;
+}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{
+  font-size:1.15rem;color:var(--text-mid);max-width:520px;
+  margin:0 auto 36px;animation:fadeUp .6s .2s ease both;
+}
+.hero-sub strong{color:var(--green);}
+.hero-btns{
+  display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .6s .25s ease both;margin-bottom:32px;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:16px 32px;border-radius:50px;font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:600;cursor:pointer;border:none;
+  text-decoration:none;transition:all .3s ease;
+}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;}
+.btn-green:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(74,124,89,.35);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--text-dark);}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(232,184,75,.4);}
+.brand-line{
+  font-family:'Caveat',cursive;font-size:1.2rem;color:var(--brown-light);
+  animation:fadeUp .6s .3s ease both;
+}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(24px);}100%{opacity:1;transform:translateY(0);}}
 
-        .header { text-align: center; margin-bottom: 32px; }
-        .logo { font-size: 28px; font-weight: 700; color: #2d8659; margin-bottom: 8px; }
-        .child-icon { font-size: 48px; margin-bottom: 12px; }
+/* ── TRUST STATS ── */
+.trust-bar{
+  background:linear-gradient(135deg,var(--green),#3A6347);
+  padding:28px 24px;position:relative;z-index:1;
+}
+.trust-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:24px 48px;
+  max-width:900px;margin:0 auto;
+}
+.trust-item{
+  display:flex;align-items:center;gap:10px;color:#fff;
+  font-size:.95rem;font-weight:500;
+}
+.trust-icon{font-size:1.4rem;}
 
-        h1 {
-            font-size: 24px; font-weight: 700; color: #1a1a1a;
-            margin-bottom: 8px; line-height: 1.3;
-        }
+/* ── WHY SECTION ── */
+.why-section{padding:80px 24px;position:relative;z-index:1;}
+.section-label{
+  font-family:'Caveat',cursive;font-size:1.1rem;color:var(--brown-light);
+  margin-bottom:8px;display:block;text-align:center;
+}
+.section-title{
+  font-family:'Playfair Display',serif;font-weight:900;
+  font-size:clamp(1.8rem,4vw,2.8rem);text-align:center;
+  color:var(--text-dark);margin-bottom:16px;
+}
+.section-title em{color:var(--gold);font-style:italic;}
+.section-sub{text-align:center;color:var(--text-mid);max-width:540px;margin:0 auto 56px;font-size:1.05rem;}
+.why-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;max-width:960px;margin:0 auto;
+}
+.why-card{
+  background:var(--warm-white);border-radius:20px;padding:32px 24px;
+  box-shadow:0 4px 20px var(--shadow);border:1px solid rgba(232,184,75,.2);
+  transition:transform .3s,box-shadow .3s;
+}
+.why-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px var(--shadow);}
+.why-icon{font-size:2.8rem;margin-bottom:16px;display:block;}
+.why-card h3{
+  font-family:'Playfair Display',serif;font-size:1.2rem;
+  color:var(--text-dark);margin-bottom:10px;
+}
+.why-card p{font-size:.95rem;color:var(--text-mid);line-height:1.6;}
 
-        .subtitle { font-size: 15px; color: #666; font-weight: 400; }
+/* ── CALCULATOR SECTION ── */
+.calc-section{padding:80px 24px 100px;position:relative;z-index:1;}
+.calc-wrap{max-width:680px;margin:0 auto;}
 
-        .form-group { margin-bottom: 24px; }
+/* ── STEP INDICATOR ── */
+.steps-bar{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;margin-bottom:48px;
+}
+.step-dot{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.9rem;
+  background:var(--milk);color:var(--text-light);
+  border:2px solid #D5C3A8;
+  transition:all .4s ease;position:relative;z-index:1;
+  cursor:default;
+}
+.step-dot.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 0 0 4px rgba(74,124,89,.15);}
+.step-dot.done{background:var(--gold);color:#fff;border-color:var(--gold);}
+.step-line{height:2.5px;flex:1;background:#D5C3A8;max-width:60px;transition:background .4s;}
+.step-line.done{background:var(--gold);}
+.step-label{
+  position:absolute;top:52px;white-space:nowrap;
+  font-size:.72rem;color:var(--text-light);font-weight:600;
+  text-transform:uppercase;letter-spacing:.5px;
+}
 
-        label {
-            display: block; font-size: 14px;
-            font-weight: 600; color: #333; margin-bottom: 8px;
-        }
+/* ── CARDS ── */
+.calc-card{
+  background:var(--warm-white);border-radius:20px;
+  padding:40px 36px;box-shadow:0 4px 24px var(--shadow);
+  border:1px solid rgba(232,184,75,.2);
+  animation:cardIn .5s ease both;display:none;
+}
+.calc-card.active{display:block;}
+@keyframes cardIn{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+.step-tag{
+  display:inline-block;background:var(--green-pale);color:var(--green);
+  font-size:.8rem;font-weight:700;padding:6px 16px;border-radius:20px;
+  margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px;
+}
+.card-title{
+  font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;
+  color:var(--text-dark);margin-bottom:6px;
+}
+.card-sub{font-size:.95rem;color:var(--text-mid);margin-bottom:28px;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:24px 0;}
 
-        input {
-            width: 100%; padding: 14px 16px; font-size: 16px;
-            border: 1.5px solid #e0e0e0; border-radius: 10px;
-            background: #fafafa; color: #2d2d2d;
-            transition: all 0.2s; font-family: inherit;
-        }
+/* ── FORM INPUTS ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.form-row.single{grid-template-columns:1fr;}
+.fg{margin-bottom:20px;}
+.fg label{
+  display:block;font-size:.85rem;font-weight:600;
+  color:var(--text-mid);margin-bottom:8px;letter-spacing:.3px;
+}
+.fg label span{color:#c0392b;}
+.fg input,.fg select{
+  width:100%;padding:14px 16px;font-size:.95rem;font-family:'DM Sans',sans-serif;
+  border:1.5px solid #E0D4C0;border-radius:12px;
+  background:var(--cream);color:var(--text-dark);
+  transition:all .25s;appearance:none;
+}
+.fg input:focus,.fg select:focus{
+  outline:none;border-color:var(--green);
+  background:#fff;box-shadow:0 0 0 3px rgba(74,124,89,.1);
+}
+.fg input::placeholder{color:var(--text-light);}
+.input-icon-wrap{position:relative;}
+.input-icon-wrap .icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:1.1rem;pointer-events:none;
+}
+.input-icon-wrap input{padding-left:42px;}
+.field-error{color:#c0392b;font-size:.8rem;margin-top:5px;display:none;}
+.field-error.show{display:block;}
+.fg input.err{border-color:#c0392b;}
 
-        input:focus {
-            outline: none; border-color: #2d8659;
-            background: white; box-shadow: 0 0 0 3px rgba(45,134,89,0.1);
-        }
+/* ── GENDER PILLS ── */
+.gender-pills{display:flex;gap:10px;flex-wrap:wrap;}
+.gpill{
+  flex:1;min-width:90px;padding:12px 16px;text-align:center;
+  border:1.5px solid #E0D4C0;border-radius:12px;
+  font-size:.9rem;font-weight:500;color:var(--text-mid);
+  cursor:pointer;transition:all .25s;background:var(--cream);
+}
+.gpill:hover{border-color:var(--green);color:var(--green);}
+.gpill.sel{background:var(--green-pale);border-color:var(--green);color:var(--green);font-weight:700;}
 
-        .btn {
-            width: 100%; padding: 16px; font-size: 16px; font-weight: 600;
-            border: none; border-radius: 12px; cursor: pointer;
-            transition: all 0.3s ease; font-family: inherit;
-            text-decoration: none; display: inline-block; text-align: center;
-        }
+/* ── NAV BUTTONS ── */
+.card-nav{display:flex;gap:12px;margin-top:28px;}
+.btn-back{
+  padding:14px 28px;border-radius:50px;font-family:'DM Sans',sans-serif;
+  font-size:.95rem;font-weight:600;cursor:pointer;
+  background:transparent;color:var(--text-light);
+  border:1.5px solid #D5C3A8;transition:all .25s;
+}
+.btn-back:hover{border-color:var(--brown-light);color:var(--text-mid);}
+.btn-next{
+  flex:1;padding:16px 28px;border-radius:50px;font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:600;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--green),var(--green-light));
+  color:#fff;transition:all .3s;
+}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,124,89,.3);}
 
-        .btn-primary { background: #2d8659; color: white; }
-        .btn-primary:hover {
-            background: #246f48; transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(45,134,89,0.3);
-        }
+/* ── RESULTS ── */
+.results-card{
+  background:var(--warm-white);border-radius:20px;
+  padding:40px 36px;box-shadow:0 4px 24px var(--shadow);
+  border:1px solid rgba(232,184,75,.2);display:none;
+}
+.results-card.active{display:block;}
+.result-hero{
+  background:linear-gradient(135deg,var(--green),#3A6347);
+  border-radius:16px;padding:28px;text-align:center;color:#fff;
+  margin-bottom:28px;
+}
+.result-hero .milk-ml{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;line-height:1;}
+.result-hero .ml-label{font-size:.9rem;opacity:.8;margin-top:6px;}
+.result-hero .age-tag{
+  display:inline-block;background:rgba(255,255,255,.2);
+  padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:600;
+  margin-bottom:12px;
+}
+.result-hero .result-title-text{font-size:1rem;opacity:.85;margin-bottom:4px;}
 
-        .btn-calculate { background: #2d8659; color: white; margin-top: 8px; }
-        .btn-calculate:hover {
-            background: #246f48; transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(45,134,89,0.3);
-        }
+.nutrient-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+.nutrient-card{
+  background:var(--cream);border-radius:14px;padding:18px 16px;
+  text-align:center;border:1.5px solid rgba(232,184,75,.3);
+  transition:transform .25s;
+}
+.nutrient-card:hover{transform:translateY(-3px);}
+.nutrient-emoji{font-size:1.6rem;margin-bottom:6px;display:block;}
+.nutrient-name{font-size:.8rem;color:var(--text-light);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.nutrient-val{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--text-dark);margin-top:2px;}
 
-        .btn-whatsapp { background: #25d366; color: white; margin-top: 16px; }
-        .btn-whatsapp:hover {
-            background: #1faa52; transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37,211,102,0.3);
-        }
-        .btn-whatsapp::before { content: "💬 "; margin-right: 6px; }
+/* ── WEIGHT STATUS ── */
+.weight-card{border-radius:16px;padding:24px;margin-bottom:28px;border:2px solid;}
+.weight-card.underweight{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border-color:#ff9800;}
+.weight-card.healthy{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-color:#4caf50;}
+.weight-card.overweight{background:linear-gradient(135deg,#fce4ec,#f8bbd0);border-color:#e91e63;}
+.wc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.wc-badge{
+  display:inline-block;padding:6px 18px;border-radius:20px;
+  font-size:.85rem;font-weight:700;color:#fff;
+}
+.underweight .wc-badge{background:#ff9800;}
+.healthy .wc-badge{background:#4caf50;}
+.overweight .wc-badge{background:#e91e63;}
+.wc-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text-dark);}
+.w-stats{display:flex;gap:10px;margin-bottom:14px;}
+.w-stat{
+  flex:1;background:#fff;border-radius:10px;padding:12px;
+  text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+.w-stat-label{font-size:.72rem;color:#888;margin-bottom:3px;font-weight:600;text-transform:uppercase;}
+.w-stat-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--text-dark);}
+.w-bar-wrap{background:rgba(0,0,0,.1);border-radius:10px;height:10px;overflow:hidden;margin:10px 0 6px;}
+.w-bar-fill{height:100%;border-radius:10px;transition:width .8s cubic-bezier(.34,1.56,.64,1);}
+.w-bar-labels{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(0,0,0,.4);}
+.wc-msg{font-size:.9rem;color:var(--text-mid);line-height:1.6;margin-top:12px;}
 
-        .weight-status-card {
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 24px;
-            text-align: center;
-            border: 2px solid;
-        }
+/* ── SUMMARY ── */
+.summary-grid{border-radius:14px;overflow:hidden;border:1.5px solid rgba(232,184,75,.3);margin-bottom:24px;}
+.summary-row{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--warm-white);border-bottom:1px solid rgba(232,184,75,.2);
+}
+.summary-row:last-child{border-bottom:none;}
+.summary-row:nth-child(even){background:var(--cream);}
+.summary-key{font-size:.82rem;color:var(--text-light);font-weight:600;width:120px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px;}
+.summary-val{font-size:.95rem;color:var(--text-dark);font-weight:500;}
+.summary-icon{font-size:1.1rem;}
 
-        .weight-status-card.underweight {
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            border-color: #ff9800;
-        }
+/* ── WHATSAPP BTN ── */
+.btn-wa{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:18px;border-radius:50px;border:none;
+  background:linear-gradient(135deg,#25D366,#1aa750);
+  color:#fff;font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  transition:all .3s;margin-bottom:12px;
+}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(37,211,102,.4);}
+.btn-wa .wa-icon{font-size:1.4rem;}
 
-        .weight-status-card.healthy {
-            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-            border-color: #4caf50;
-        }
+/* ── FUN FACT ── */
+.fun-fact{
+  background:linear-gradient(135deg,var(--milk),var(--blue-soft));
+  border-radius:16px;padding:20px;margin-bottom:24px;
+  border:1.5px solid rgba(214,234,244,.6);
+}
+.ff-title{font-weight:700;font-size:.9rem;color:var(--text-dark);margin-bottom:6px;}
+.ff-text{font-size:.88rem;color:var(--text-mid);line-height:1.6;}
 
-        .weight-status-card.overweight {
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            border-color: #e91e63;
-        }
+/* ── SEO BENEFITS SECTION ── */
+.benefits-section{padding:80px 24px;background:var(--milk);position:relative;z-index:1;}
+.benefit-tabs{max-width:800px;margin:48px auto 0;}
+.tab-pills{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:32px;
+}
+.tab-pill{
+  padding:10px 22px;border-radius:50px;font-size:.88rem;font-weight:600;
+  cursor:pointer;border:1.5px solid #D5C3A8;background:var(--warm-white);
+  color:var(--text-mid);transition:all .25s;
+}
+.tab-pill.active{background:var(--green);color:#fff;border-color:var(--green);}
+.tab-content{display:none;animation:fadeUp .4s ease both;}
+.tab-content.active{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.benefit-item{
+  background:var(--warm-white);border-radius:16px;padding:22px;
+  box-shadow:0 2px 12px var(--shadow);border:1px solid rgba(232,184,75,.2);
+}
+.bi-icon{font-size:2rem;margin-bottom:10px;display:block;}
+.bi-title{font-weight:700;font-size:.95rem;color:var(--text-dark);margin-bottom:6px;}
+.bi-text{font-size:.85rem;color:var(--text-mid);line-height:1.6;}
 
-        .weight-status-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+/* ── TESTIMONIALS ── */
+.testimonials{padding:80px 24px;position:relative;z-index:1;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:48px auto 0;}
+.testi-card{
+  background:var(--warm-white);border-radius:20px;padding:28px;
+  box-shadow:0 4px 20px var(--shadow);border:1px solid rgba(232,184,75,.2);
+}
+.testi-stars{color:var(--gold);font-size:1rem;margin-bottom:12px;}
+.testi-text{font-size:.95rem;color:var(--text-mid);line-height:1.7;margin-bottom:16px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--green));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:700;color:#fff;
+}
+.testi-name{font-weight:700;font-size:.9rem;color:var(--text-dark);}
+.testi-loc{font-size:.8rem;color:var(--text-light);}
 
-        .weight-status-badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+/* ── FAQ ── */
+.faq-section{padding:80px 24px;background:var(--milk);position:relative;z-index:1;}
+.faq-list{max-width:680px;margin:48px auto 0;}
+.faq-item{
+  background:var(--warm-white);border-radius:16px;margin-bottom:12px;
+  border:1px solid rgba(232,184,75,.2);overflow:hidden;
+}
+.faq-q{
+  width:100%;padding:20px 24px;text-align:left;background:none;border:none;
+  font-family:'DM Sans',sans-serif;font-size:.98rem;font-weight:600;
+  color:var(--text-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  transition:background .2s;
+}
+.faq-q:hover{background:var(--cream);}
+.faq-chevron{font-size:1.2rem;transition:transform .3s;color:var(--gold);}
+.faq-q.open .faq-chevron{transform:rotate(180deg);}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;
+  padding:0 24px;font-size:.92rem;color:var(--text-mid);line-height:1.7;
+}
+.faq-a.open{max-height:200px;padding:0 24px 20px;}
 
-        .underweight .weight-status-badge { background: #ff9800; color: white; }
-        .healthy .weight-status-badge     { background: #4caf50; color: white; }
-        .overweight .weight-status-badge  { background: #e91e63; color: white; }
+/* ── FOOTER ── */
+.footer{
+  background:linear-gradient(135deg,var(--text-dark),#1a1108);
+  padding:48px 24px 32px;text-align:center;position:relative;z-index:1;
+}
+.footer-logo{
+  font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;
+  color:var(--gold);margin-bottom:8px;
+}
+.footer-tagline{
+  font-family:'Caveat',cursive;font-size:1.1rem;color:var(--brown-light);margin-bottom:24px;
+}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
+.footer-links a{color:#8C7060;font-size:.85rem;text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:.8rem;color:#5A3E28;}
 
-        .weight-row {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 12px;
-            gap: 8px;
-        }
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--green),var(--green-light));
+  color:#fff;padding:14px 28px;border-radius:50px;
+  font-size:.9rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.2);
+  z-index:1000;transition:opacity .4s;
+}
 
-        .weight-stat {
-            background: white;
-            border-radius: 10px;
-            padding: 10px 14px;
-            flex: 1;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        }
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 
-        .weight-stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
-        .weight-stat-value { font-size: 18px; font-weight: 700; color: #2d2d2d; }
-
-        .weight-message {
-            font-size: 13px;
-            color: #555;
-            margin-top: 12px;
-            line-height: 1.5;
-        }
-
-        .weight-bar-wrap {
-            background: #eee;
-            border-radius: 10px;
-            height: 10px;
-            margin: 14px 0 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .weight-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.6s ease;
-        }
-
-        .weight-bar-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: #aaa;
-        }
-
-        .results {
-            background: linear-gradient(135deg, #fff8e1 0%, #ffe0b2 100%);
-            border-radius: 12px;
-            padding: 24px;
-            margin-top: 24px;
-            border: 2px solid #ffd54f;
-        }
-
-        .result-title {
-            font-size: 18px; font-weight: 700; color: #e65100;
-            margin-bottom: 16px; text-align: center;
-        }
-
-        .result-highlight {
-            background: white; border-radius: 10px; padding: 16px;
-            text-align: center; margin-bottom: 20px;
-            box-shadow: 0 2px 6px rgba(230,81,0,0.1);
-        }
-
-        .result-highlight-label { font-size: 13px; color: #666; margin-bottom: 6px; }
-        .result-highlight-value { font-size: 32px; font-weight: 700; color: #e65100; }
-
-        .nutrient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-        .nutrient-card {
-            background: white; border-radius: 10px; padding: 14px;
-            text-align: center; box-shadow: 0 2px 6px rgba(230,81,0,0.1);
-        }
-
-        .nutrient-name { font-size: 13px; color: #666; margin-bottom: 6px; }
-        .nutrient-value { font-size: 20px; font-weight: 700; color: #e65100; }
-
-        .age-indicator {
-            background: #2d8659; color: white; padding: 8px 16px;
-            border-radius: 20px; font-size: 14px; font-weight: 600;
-            display: inline-block; margin-bottom: 16px;
-        }
-
-        .info-box {
-            background: #e8f5e9; border-left: 4px solid #2d8659;
-            padding: 16px; border-radius: 8px; margin-top: 24px;
-            font-size: 14px; line-height: 1.6; color: #1b5e20;
-        }
-
-        .hidden { display: none; }
-
-        .microcopy { text-align: center; font-size: 13px; color: #999; margin-top: 12px; }
-        .error { color: #d32f2f; font-size: 13px; margin-top: 6px; }
-        .input-hint { font-size: 13px; color: #999; margin-top: 6px; }
-
-        .toast {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            background: #2d8659; color: white; padding: 12px 24px;
-            border-radius: 24px; font-size: 14px; font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;
-            transition: opacity 0.4s ease;
-        }
-
-        @media (max-width: 480px) {
-            .card { padding: 24px 20px; }
-            h1 { font-size: 22px; }
-            .result-highlight-value { font-size: 28px; }
-        }
-    </style>
+@media(max-width:560px){
+  .calc-card,.results-card{padding:28px 20px;}
+  .form-row{grid-template-columns:1fr;}
+  .hero h1{font-size:2rem;}
+  .w-stats{flex-direction:column;}
+  .card-nav{flex-direction:column;}
+  .btn-back{width:100%;text-align:center;}
+  .step-label{display:none;}
+  .steps-bar{gap:0;}
+}
+</style>
 </head>
 <body>
-    <div class="container">
 
-        <!-- Lead Capture Form -->
-        <div id="leadForm" class="card">
-            <div class="header">
-                <div class="logo">Klimom</div>
-                <div class="child-icon">👶</div>
-                <h1>Child Nutrition Calculator</h1>
-                <p class="subtitle">Discover your child's ideal A2 milk intake</p>
-            </div>
+<div class="bg-blobs">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+</div>
 
-            <form id="leadCaptureForm">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" required placeholder="Enter your name" />
-                </div>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" required placeholder="Enter your email" />
-                    <div id="emailError" class="error hidden">Please enter a valid email address</div>
-                </div>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="brand-badge"><span>🥛</span> Klimom — Milk + Om</div>
+  <span class="hero-emoji">👶</span>
+  <h1>Child <em>Nutrition</em> Calculator</h1>
+  <p class="hero-sub">
+    Is your child getting enough <strong>protein, calcium & vitamins</strong>?<br>
+    Find out in 60 seconds — and get your free personalised report on WhatsApp!
+  </p>
+  <div class="hero-btns">
+    <a href="#calculator" class="btn btn-green">🧮 Calculate My Child's Plan</a>
+    <a href="#calculator" class="btn btn-gold">📲 Get Free Nutrition Report</a>
+  </div>
+  <p class="brand-line">Klimom — "Milk" reversed + Om · Pure nourishment for growing souls</p>
+</section>
 
-                <div class="form-group">
-                    <label for="phone">WhatsApp Number</label>
-                    <input type="tel" id="phone" required placeholder="WhatsApp number — we'll send your report here" />
-                    <div id="phoneError" class="error hidden">Please enter a valid 10-digit WhatsApp number</div>
-                </div>
+<!-- ═══════════ TRUST BAR ═══════════ -->
+<div class="trust-bar">
+  <div class="trust-grid">
+    <div class="trust-item"><span class="trust-icon">⭐</span> Trusted by 10,000+ Families</div>
+    <div class="trust-item"><span class="trust-icon">👩‍⚕️</span> Expert-Curated Nutrition Plans</div>
+    <div class="trust-item"><span class="trust-icon">📲</span> Instant WhatsApp Report</div>
+    <div class="trust-item"><span class="trust-icon">🌱</span> Safe, Balanced & Child-Friendly</div>
+  </div>
+</div>
 
-                <button type="submit" class="btn btn-primary">Continue to Calculator</button>
-                <p class="microcopy">Takes 10 seconds • No commitment required</p>
-            </form>
-        </div>
+<!-- ═══════════ WHY NUTRITION MATTERS ═══════════ -->
+<section class="why-section" id="why">
+  <span class="section-label reveal">🌱 Why it matters</span>
+  <h2 class="section-title reveal">The First 13 Years <em>Shape Everything</em></h2>
+  <p class="section-sub reveal">A child's nutrition during these years determines lifelong health, brain development, and growth. Small gaps today become big challenges tomorrow.</p>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">🧠</span>
+      <h3>Brain Development</h3>
+      <p>90% of a child's brain development happens before age 5. Right nutrition — especially protein and Vitamin D — is the single biggest factor in cognitive growth.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">🦴</span>
+      <h3>Strong Bones & Height</h3>
+      <p>Calcium and Vitamin D during childhood directly determine peak bone mass. Children who miss out are at higher risk of fractures and stunted height.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">🛡️</span>
+      <h3>Immunity & Resilience</h3>
+      <p>A well-nourished child falls sick less often. Vitamin A, zinc and quality protein build the immune defenses that keep kids active and learning.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-icon">📏</span>
+      <h3>Healthy Weight</h3>
+      <p>Under- and over-nutrition are both concerns. Knowing your child's ideal intake helps you make confident, informed choices every single day.</p>
+    </div>
+  </div>
+</section>
 
-        <!-- Calculator -->
-        <div id="calculator" class="card hidden">
-            <div class="header">
-                <div class="logo">Klimom</div>
-                <div class="child-icon">👶</div>
-                <h1>Child Nutrition Calculator</h1>
-                <p class="subtitle">Enter your child's details below</p>
-            </div>
+<!-- ═══════════ CALCULATOR ═══════════ -->
+<section class="calc-section" id="calculator">
+  <div class="calc-wrap">
+    <span class="section-label reveal" style="display:block;text-align:center;">✨ Just 60 Seconds</span>
+    <h2 class="section-title reveal">Build Your Child's <em>Nutrition Plan</em></h2>
+    <p class="section-sub reveal" style="margin-bottom:40px;">Enter a few details and we'll instantly calculate the ideal daily A2 milk intake, key nutrients, and weight status for your child's age.</p>
 
-            <div class="form-group">
-                <label for="age">Child's Age (Years)</label>
-                <input type="number" id="age" min="1" max="13" placeholder="e.g. 5" />
-                <p class="input-hint">Supported range: 1 – 13 years</p>
-            </div>
-
-            <div class="form-group">
-                <label for="weight">Child's Weight (kg)</label>
-                <input type="number" id="weight" min="5" max="100" placeholder="e.g. 18" />
-            </div>
-
-            <div id="calcError" class="error hidden" style="margin-bottom: 12px;"></div>
-
-            <button class="btn btn-calculate" onclick="handleCalculate()">
-                🧮 Calculate Nutrition
-            </button>
-
-            <!-- Weight Status -->
-            <div id="weightStatus" class="weight-status-card hidden">
-                <div class="weight-status-title">Weight Status for Age</div>
-                <div class="weight-status-badge" id="weightBadge">Healthy</div>
-
-                <div class="weight-bar-wrap">
-                    <div class="weight-bar-fill" id="weightBarFill"></div>
-                </div>
-                <div class="weight-bar-labels">
-                    <span>Underweight</span>
-                    <span>Healthy</span>
-                    <span>Overweight</span>
-                </div>
-
-                <div class="weight-row">
-                    <div class="weight-stat">
-                        <div class="weight-stat-label">Your Child</div>
-                        <div class="weight-stat-value" id="actualWeight">—</div>
-                    </div>
-                    <div class="weight-stat">
-                        <div class="weight-stat-label">Ideal for Age</div>
-                        <div class="weight-stat-value" id="idealWeight">—</div>
-                    </div>
-                    <div class="weight-stat">
-                        <div class="weight-stat-label">Difference</div>
-                        <div class="weight-stat-value" id="weightDiff">—</div>
-                    </div>
-                </div>
-
-                <p class="weight-message" id="weightMessage"></p>
-            </div>
-
-            <!-- Milk Intake Results -->
-            <div id="results" class="results hidden">
-                <div style="text-align: center">
-                    <span class="age-indicator" id="ageGroup">4-8 years</span>
-                </div>
-
-                <div class="result-title">Recommended Daily A2 Milk Intake</div>
-
-                <div class="result-highlight">
-                    <div class="result-highlight-label">Daily Requirement</div>
-                    <div class="result-highlight-value" id="milkIntake">450 ml</div>
-                </div>
-
-                <div class="result-title" style="margin-top: 20px; margin-bottom: 12px;">
-                    Estimated Daily Nutrients
-                </div>
-
-                <div class="nutrient-grid">
-                    <div class="nutrient-card">
-                        <div class="nutrient-name">Protein</div>
-                        <div class="nutrient-value" id="protein">14g</div>
-                    </div>
-                    <div class="nutrient-card">
-                        <div class="nutrient-name">Calcium</div>
-                        <div class="nutrient-value" id="calcium">540mg</div>
-                    </div>
-                    <div class="nutrient-card">
-                        <div class="nutrient-name">Vitamin A</div>
-                        <div class="nutrient-value" id="vitaminA">180μg</div>
-                    </div>
-                    <div class="nutrient-card">
-                        <div class="nutrient-name">Vitamin D</div>
-                        <div class="nutrient-value" id="vitaminD">1.8μg</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="infoBox" class="info-box hidden">
-                A2 milk is easier to digest and helps build strong bones and
-                immunity. Perfect for your growing child's daily nutrition needs.
-            </div>
-
-            <a href="#" id="whatsappBtn" class="btn btn-whatsapp hidden" target="_blank">
-                Give Your Child Better Milk
-            </a>
-        </div>
+    <!-- STEP BAR -->
+    <div class="steps-bar reveal" id="stepsBar">
+      <div class="step-dot active" id="sd1">1<span class="step-label">Parent</span></div>
+      <div class="step-line" id="sl1"></div>
+      <div class="step-dot" id="sd2">2<span class="step-label">Child</span></div>
+      <div class="step-line" id="sl2"></div>
+      <div class="step-dot" id="sd3">🚀<span class="step-label">Results</span></div>
     </div>
 
-    <script>
-        var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
-        var WHATSAPP_BASE_URL = "https://api.whatsapp.com/send/?phone=919100741305";
+    <!-- ── CARD 1: PARENT ── -->
+    <div class="calc-card active" id="card1">
+      <span class="step-tag">Step 1 of 2 · Parent Details</span>
+      <h3 class="card-title">Hello there, Parent! 👋</h3>
+      <p class="card-sub">Let's start with your details so we can send your child's personalised report.</p>
+      <div class="divider"></div>
+      <div class="fg">
+        <label>Your Name <span>*</span></label>
+        <div class="input-icon-wrap">
+          <span class="icon">👤</span>
+          <input type="text" id="p-name" placeholder="e.g. Priya Sharma"/>
+        </div>
+        <div class="field-error" id="e-pname">Please enter your name</div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Email Address <span>*</span></label>
+          <div class="input-icon-wrap">
+            <span class="icon">✉️</span>
+            <input type="email" id="p-email" placeholder="your@email.com"/>
+          </div>
+          <div class="field-error" id="e-pemail">Enter a valid email</div>
+        </div>
+        <div class="fg">
+          <label>City <span>*</span></label>
+          <div class="input-icon-wrap">
+            <span class="icon">📍</span>
+            <input type="text" id="p-city" placeholder="e.g. Mumbai"/>
+          </div>
+          <div class="field-error" id="e-pcity">Enter your city</div>
+        </div>
+      </div>
+      <div class="fg">
+        <label>WhatsApp Number <span>*</span></label>
+        <div class="input-icon-wrap">
+          <span class="icon">📱</span>
+          <input type="tel" id="p-phone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="field-error" id="e-pphone">Enter a valid 10-digit WhatsApp number</div>
+      </div>
+      <div class="fun-fact">
+        <div class="ff-title">🤓 Did you know?</div>
+        <div class="ff-text">Families who track their child's nutrition ensure <strong>40% better nutrient intake</strong> compared to those who don't. You're already ahead!</div>
+      </div>
+      <div class="card-nav">
+        <button class="btn-next" onclick="goToCard2()">Continue → Child Details</button>
+      </div>
+    </div>
 
-        // In-memory only — no localStorage, safe for Shopify
-        var userData = { name: "", email: "", phone: "" };
+    <!-- ── CARD 2: CHILD ── -->
+    <div class="calc-card" id="card2">
+      <span class="step-tag">Step 2 of 2 · Your Child</span>
+      <h3 class="card-title">Tell us about your child 🌟</h3>
+      <p class="card-sub">We'll calculate the ideal nutrition based on age and current weight.</p>
+      <div class="divider"></div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Child's Name <span>*</span></label>
+          <div class="input-icon-wrap">
+            <span class="icon">🧒</span>
+            <input type="text" id="c-name" placeholder="e.g. Aryan"/>
+          </div>
+          <div class="field-error" id="e-cname">Enter child's name</div>
+        </div>
+        <div class="fg">
+          <label>Gender</label>
+          <div class="gender-pills" style="margin-top:4px;">
+            <div class="gpill" onclick="selGender(this,'Girl')">👧 Girl</div>
+            <div class="gpill" onclick="selGender(this,'Boy')">👦 Boy</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Age (Years) <span>*</span></label>
+          <div class="input-icon-wrap">
+            <span class="icon">🎂</span>
+            <input type="number" id="c-age" min="1" max="13" placeholder="e.g. 5"/>
+          </div>
+          <div class="field-error" id="e-cage">Enter age between 1–13</div>
+        </div>
+        <div class="fg">
+          <label>Weight (kg) <span>*</span></label>
+          <div class="input-icon-wrap">
+            <span class="icon">⚖️</span>
+            <input type="number" id="c-weight" min="5" max="100" placeholder="e.g. 18"/>
+          </div>
+          <div class="field-error" id="e-cweight">Enter weight between 5–100 kg</div>
+        </div>
+      </div>
+      <div class="fun-fact">
+        <div class="ff-title">🥛 Klimom A2 Milk Difference</div>
+        <div class="ff-text">A2 milk contains only the A2 beta-casein protein, making it easier to digest and absorb. Ideal for children's growing bones, brain, and immune system.</div>
+      </div>
+      <div class="card-nav">
+        <button class="btn-back" onclick="goToCard1()">← Back</button>
+        <button class="btn-next" onclick="calculateNutrition()">🧮 Calculate My Child's Plan</button>
+      </div>
+    </div>
 
-        var WHO_IDEAL_WEIGHT = {
-            1: 9.6,  2: 12.0, 3: 14.0, 4: 16.0,  5: 18.0,
-            6: 20.0, 7: 22.5, 8: 25.0, 9: 28.0,  10: 31.5,
-            11: 35.5, 12: 39.5, 13: 43.5
-        };
+    <!-- ── RESULTS ── -->
+    <div class="results-card" id="resultsCard">
 
-        // Lead capture — store in memory, do NOT send to Sheets yet
-        document.getElementById("leadCaptureForm").addEventListener("submit", function(e) {
-            e.preventDefault();
+      <!-- Weight Status -->
+      <div class="weight-card" id="weightCard">
+        <div class="wc-top">
+          <div class="wc-title">Weight Status for Age</div>
+          <div class="wc-badge" id="wcBadge"></div>
+        </div>
+        <div class="w-stats">
+          <div class="w-stat"><div class="w-stat-label">Your Child</div><div class="w-stat-val" id="actualW"></div></div>
+          <div class="w-stat"><div class="w-stat-label">Ideal for Age</div><div class="w-stat-val" id="idealW"></div></div>
+          <div class="w-stat"><div class="w-stat-label">Difference</div><div class="w-stat-val" id="diffW"></div></div>
+        </div>
+        <div class="w-bar-wrap"><div class="w-bar-fill" id="wBar"></div></div>
+        <div class="w-bar-labels"><span>Underweight</span><span>Healthy</span><span>Overweight</span></div>
+        <p class="wc-msg" id="wcMsg"></p>
+      </div>
 
-            var name  = document.getElementById("name").value.trim();
-            var email = document.getElementById("email").value.trim();
-            var phone = document.getElementById("phone").value.trim();
-            var valid = true;
+      <!-- Milk Intake Hero -->
+      <div class="result-hero">
+        <div class="age-tag" id="rAgeGroup"></div>
+        <div class="result-title-text">Recommended Daily A2 Milk Intake</div>
+        <div class="milk-ml" id="rMilk"></div>
+        <div class="ml-label">ml per day for optimal growth</div>
+      </div>
 
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                document.getElementById("emailError").classList.remove("hidden");
-                valid = false;
-            } else {
-                document.getElementById("emailError").classList.add("hidden");
-            }
+      <!-- Nutrients -->
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text-dark);margin-bottom:16px;">Daily Nutrients from A2 Milk</div>
+      <div class="nutrient-grid">
+        <div class="nutrient-card"><span class="nutrient-emoji">💪</span><div class="nutrient-name">Protein</div><div class="nutrient-val" id="rProtein"></div></div>
+        <div class="nutrient-card"><span class="nutrient-emoji">🦴</span><div class="nutrient-name">Calcium</div><div class="nutrient-val" id="rCalcium"></div></div>
+        <div class="nutrient-card"><span class="nutrient-emoji">👁️</span><div class="nutrient-name">Vitamin A</div><div class="nutrient-val" id="rVitA"></div></div>
+        <div class="nutrient-card"><span class="nutrient-emoji">☀️</span><div class="nutrient-name">Vitamin D</div><div class="nutrient-val" id="rVitD"></div></div>
+      </div>
 
-            if (!/^[0-9]{10}$/.test(phone)) {
-                document.getElementById("phoneError").classList.remove("hidden");
-                valid = false;
-            } else {
-                document.getElementById("phoneError").classList.add("hidden");
-            }
+      <!-- Summary -->
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text-dark);margin-bottom:12px;">Your Summary</div>
+      <div class="summary-grid" id="summaryGrid"></div>
 
-            if (!valid) return;
+      <!-- Info Fact -->
+      <div class="fun-fact" style="margin-bottom:20px;">
+        <div class="ff-title">🌟 Why A2 Milk?</div>
+        <div class="ff-text">A2 milk is easier to digest and helps build strong bones and immunity. Its unique beta-casein protein structure is closer to human breast milk — making it perfect for growing children.</div>
+      </div>
 
-            userData.name  = name;
-            userData.email = email;
-            userData.phone = phone;
+      <!-- WhatsApp CTA -->
+      <a href="#" class="btn-wa" id="waBtn" target="_blank">
+        <span class="wa-icon">💬</span> Get Full Report on WhatsApp — Free!
+      </a>
+      <button class="btn-back" style="width:100%;text-align:center;margin-top:0;" onclick="resetCalculator()">← Calculate for Another Child</button>
+    </div>
 
-            document.getElementById("leadForm").classList.add("hidden");
-            document.getElementById("calculator").classList.remove("hidden");
-        });
+  </div>
+</section>
 
-        // Calculate — sends ONE row to Sheets with everything
-        function handleCalculate() {
-            var ageVal    = document.getElementById("age").value;
-            var weightVal = document.getElementById("weight").value;
-            var calcError = document.getElementById("calcError");
+<!-- ═══════════ BENEFITS / TABS ═══════════ -->
+<section class="benefits-section">
+  <span class="section-label reveal" style="display:block;text-align:center;">🎓 Knowledge Hub</span>
+  <h2 class="section-title reveal">Nutrition Tips by <em>Age Group</em></h2>
+  <p class="section-sub reveal" style="margin-bottom:0;">Evidence-based guidance for every stage of your child's growth journey.</p>
+  <div class="benefit-tabs reveal">
+    <div class="tab-pills">
+      <div class="tab-pill active" onclick="switchTab(this,'t1')">👶 1–3 Years</div>
+      <div class="tab-pill" onclick="switchTab(this,'t2')">🧒 4–8 Years</div>
+      <div class="tab-pill" onclick="switchTab(this,'t3')">🧑 9–13 Years</div>
+    </div>
+    <div class="tab-content active" id="t1">
+      <div class="benefit-item"><span class="bi-icon">🥛</span><div class="bi-title">350 ml A2 Milk Daily</div><div class="bi-text">Toddlers need ~350 ml per day for bone mineralisation, brain growth and healthy immunity.</div></div>
+      <div class="benefit-item"><span class="bi-icon">🧠</span><div class="bi-title">DHA & Brain Growth</div><div class="bi-text">This is the peak brain-building phase. Omega-3s and protein from quality milk support synapse formation.</div></div>
+      <div class="benefit-item"><span class="bi-icon">🦷</span><div class="bi-title">Teeth Formation</div><div class="bi-text">Calcium and phosphorus from A2 milk support healthy baby and permanent tooth development.</div></div>
+    </div>
+    <div class="tab-content" id="t2">
+      <div class="benefit-item"><span class="bi-icon">🥛</span><div class="bi-title">450 ml A2 Milk Daily</div><div class="bi-text">School-age children need more calcium as their skeleton grows rapidly and academic demands rise.</div></div>
+      <div class="benefit-item"><span class="bi-icon">📚</span><div class="bi-title">Focus & Concentration</div><div class="bi-text">Vitamin B12 and protein in milk support neurotransmitter production that fuels focus and learning.</div></div>
+      <div class="benefit-item"><span class="bi-icon">🏃</span><div class="bi-title">Energy for Activity</div><div class="bi-text">Natural sugars (lactose) and proteins in A2 milk provide sustained energy for physical play and sports.</div></div>
+    </div>
+    <div class="tab-content" id="t3">
+      <div class="benefit-item"><span class="bi-icon">🥛</span><div class="bi-title">600 ml A2 Milk Daily</div><div class="bi-text">The pre-teen growth spurt dramatically increases calcium needs — this is the bone-density window.</div></div>
+      <div class="benefit-item"><span class="bi-icon">💪</span><div class="bi-title">Muscle Development</div><div class="bi-text">Higher protein requirements during puberty are met naturally with daily A2 milk intake.</div></div>
+      <div class="benefit-item"><span class="bi-icon">🌙</span><div class="bi-title">Sleep & Recovery</div><div class="bi-text">Tryptophan in milk supports melatonin production — helping teens get the deep sleep they need.</div></div>
+    </div>
+  </div>
+</section>
 
-            if (!ageVal || !weightVal) {
-                calcError.textContent = "Please enter both age and weight before calculating.";
-                calcError.classList.remove("hidden");
-                return;
-            }
+<!-- ═══════════ TESTIMONIALS ═══════════ -->
+<section class="testimonials">
+  <span class="section-label reveal" style="display:block;text-align:center;">💬 Real Parents, Real Results</span>
+  <h2 class="section-title reveal">Families Who <em>Trust</em> Klimom</h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The calculator showed my son was borderline underweight. After following the A2 milk plan for 2 months, his weight is in the healthy range and he's so much more energetic!"</p>
+      <div class="testi-author"><div class="testi-avatar">P</div><div><div class="testi-name">Priya Menon</div><div class="testi-loc">Mumbai · Mom of a 6-year-old</div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I never realised how much my daughter's calcium intake was off. The WhatsApp report was so detailed and the team followed up personally. Absolutely brilliant service."</p>
+      <div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Ananya Sharma</div><div class="testi-loc">Hyderabad · Mom of a 9-year-old</div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"So easy to use. Took 60 seconds and I instantly knew exactly how much milk my twins needed. The age-by-age breakdown is something every parent should see."</p>
+      <div class="testi-author"><div class="testi-avatar">R</div><div><div class="testi-name">Rohit Kapoor</div><div class="testi-loc">Bengaluru · Dad of 8-year-old twins</div></div></div>
+    </div>
+  </div>
+</section>
 
-            var age    = parseInt(ageVal);
-            var weight = parseFloat(weightVal);
+<!-- ═══════════ FAQ ═══════════ -->
+<section class="faq-section">
+  <span class="section-label reveal" style="display:block;text-align:center;">❓ Common Questions</span>
+  <h2 class="section-title reveal">Everything You <em>Want to Know</em></h2>
+  <div class="faq-list reveal" id="faqList"></div>
+</section>
 
-            if (age < 1 || age > 13) {
-                calcError.textContent = "Please enter an age between 1 and 13.";
-                calcError.classList.remove("hidden");
-                return;
-            }
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="footer-logo">🥛 Klimom</div>
+  <div class="footer-tagline">Because the right nutrition today builds a brighter tomorrow.</div>
+  <div class="footer-links">
+    <a href="#">About Klimom</a>
+    <a href="#">A2 Milk Benefits</a>
+    <a href="#">Nutrition Guides</a>
+    <a href="#">WhatsApp Us</a>
+    <a href="#">Privacy Policy</a>
+  </div>
+  <div class="footer-copy">© 2025 Klimom · Pure Nutrition for Growing Families · Klimom — "Milk" reversed + Om</div>
+</footer>
 
-            if (weight < 5 || weight > 100) {
-                calcError.textContent = "Please enter a weight between 5 and 100 kg.";
-                calcError.classList.remove("hidden");
-                return;
-            }
+<script>
+/* ── GLOBAL DATA ── */
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
+var WHATSAPP_BASE_URL = "https://api.whatsapp.com/send/?phone=919100741305";
+var WHO_IDEAL = {1:9.6,2:12.0,3:14.0,4:16.0,5:18.0,6:20.0,7:22.5,8:25.0,9:28.0,10:31.5,11:35.5,12:39.5,13:43.5};
+var userData = {name:'',email:'',phone:'',city:'',childName:'',gender:'',age:0,weight:0};
+var selGenderVal = '';
 
-            calcError.classList.add("hidden");
+/* ── TICKER ── */
+var items = [
+  '🥛 Did you know? Klimom is "Milk" spelled backwards + "Om" — the pure essence of motherhood!',
+  '🧠 90% of a child\'s brain development happens before age 5. Right nutrition is the foundation!',
+  '📊 Families using a nutrition planner ensure 40% better nutrient intake for their kids.',
+  '✨ Klimom\'s Milk + Om philosophy brings traditional purity to modern parenting.',
+  '⭐ 10,000+ families have already discovered the Klimom difference.',
+  '📲 Get your personalised child nutrition plan instantly on WhatsApp!',
+  '🦴 Calcium from A2 milk builds denser, stronger bones during the critical growth years.',
+  '👶 A2 milk is closer to human breast milk — gentler on little tummies!'
+];
+var track = document.getElementById('tickerTrack');
+var full = items.concat(items).map(function(t){return '<span class="ticker-item">'+t+'</span>';}).join('');
+track.innerHTML = full;
 
-            // Milk intake
-            var milkIntake, ageGroup;
-            if (age >= 1 && age <= 3)      { milkIntake = 350; ageGroup = "1-3 years"; }
-            else if (age >= 4 && age <= 8) { milkIntake = 450; ageGroup = "4-8 years"; }
-            else                           { milkIntake = 600; ageGroup = "9-13 years"; }
+/* ── FAQ ── */
+var faqs = [
+  {q:'What is A2 milk and why is it better for children?',a:'A2 milk contains only the A2 beta-casein protein variant, unlike regular milk which has both A1 and A2. A2 protein is structurally closer to human breast milk and easier for children to digest, reducing discomfort and improving nutrient absorption.'},
+  {q:'How accurate is this nutrition calculator?',a:'Our calculator is based on WHO child growth standards and established nutritional guidelines for Indian children. It provides evidence-based recommendations for daily A2 milk intake and key nutrients by age group.'},
+  {q:'My child is picky about milk — what can I do?',a:'You can incorporate A2 milk into smoothies, milkshakes, kheer, or porridge. The key is consistency. Even spreading intake across 2–3 servings through the day meets the daily requirement without forcing a single large glass.'},
+  {q:'What if my child\'s weight is below or above ideal?',a:'Our calculator flags underweight or overweight status based on WHO age-weight norms. This is a screening tool — always consult a paediatrician for a full assessment. Our Klimom team can also suggest personalised nutrition guidance via WhatsApp.'},
+  {q:'Is this calculator free? Do you need to buy anything?',a:'Completely free, no strings attached. The calculator and personalised WhatsApp report are a free service from Klimom. Our goal is to help every parent make informed nutrition choices for their child.'},
+  {q:'What nutrients does A2 milk provide beyond calcium?',a:'A2 milk is rich in high-quality protein (casein + whey), calcium, phosphorus, Vitamin A, Vitamin D, Vitamin B12, riboflavin (B2), potassium, and iodine — all critical for a child\'s growth, immunity, and cognitive development.'}
+];
+var faqList = document.getElementById('faqList');
+faqs.forEach(function(f,i){
+  faqList.innerHTML += '<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>'+f.q+'</span><span class="faq-chevron">▼</span></button><div class="faq-a">'+f.a+'</div></div>';
+});
+function toggleFaq(btn){
+  var a = btn.nextElementSibling;
+  var open = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(function(el){el.classList.remove('open');});
+  document.querySelectorAll('.faq-q').forEach(function(el){el.classList.remove('open');});
+  if(!open){a.classList.add('open');btn.classList.add('open');}
+}
 
-            var protein  = ((milkIntake / 100) * 3.2).toFixed(1);
-            var calcium  = Math.round((milkIntake / 100) * 120);
-            var vitaminA = Math.round((milkIntake / 100) * 40);
-            var vitaminD = ((milkIntake / 100) * 0.4).toFixed(1);
+/* ── STEP HELPERS ── */
+function setStep(n){
+  for(var i=1;i<=3;i++){
+    var dot = document.getElementById('sd'+i);
+    if(!dot) continue;
+    dot.classList.remove('active','done');
+    if(i<n) dot.classList.add('done');
+    else if(i===n) dot.classList.add('active');
+  }
+  if(document.getElementById('sl1')) document.getElementById('sl1').classList.toggle('done',n>1);
+  if(document.getElementById('sl2')) document.getElementById('sl2').classList.toggle('done',n>2);
+}
 
-            document.getElementById("ageGroup").textContent   = ageGroup;
-            document.getElementById("milkIntake").textContent = milkIntake + " ml";
-            document.getElementById("protein").textContent    = protein + "g";
-            document.getElementById("calcium").textContent    = calcium + "mg";
-            document.getElementById("vitaminA").textContent   = vitaminA + "\u03bcg";
-            document.getElementById("vitaminD").textContent   = vitaminD + "\u03bcg";
+/* ── GENDER ── */
+function selGender(el,val){
+  document.querySelectorAll('.gpill').forEach(function(p){p.classList.remove('sel');});
+  el.classList.add('sel');selGenderVal=val;
+}
 
-            // Weight assessment
-            var idealWeight = WHO_IDEAL_WEIGHT[age];
-            var rawDiff     = weight - idealWeight;
-            var diff        = rawDiff.toFixed(1);
-            var absDiff     = Math.abs(rawDiff).toFixed(1);
-            var lowerBound  = idealWeight * 0.85;
-            var upperBound  = idealWeight * 1.15;
+/* ── VALIDATE & NAVIGATE ── */
+function goToCard2(){
+  var name=v('p-name'),email=v('p-email'),city=v('p-city'),phone=v('p-phone');
+  var ok=true;
+  if(!name){err('e-pname','p-name');ok=false;}else clr('e-pname','p-name');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err('e-pemail','p-email');ok=false;}else clr('e-pemail','p-email');
+  if(!city){err('e-pcity','p-city');ok=false;}else clr('e-pcity','p-city');
+  if(!/^[0-9]{10}$/.test(phone)){err('e-pphone','p-phone');ok=false;}else clr('e-pphone','p-phone');
+  if(!ok) return;
+  userData.name=name;userData.email=email;userData.city=city;userData.phone=phone;
+  showCard('card2');setStep(2);window.scrollTo({top:document.getElementById('card2').getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});
+}
+function goToCard1(){showCard('card1');setStep(1);}
+function v(id){return document.getElementById(id).value.trim();}
+function err(eid,iid){document.getElementById(eid).classList.add('show');document.getElementById(iid).classList.add('err');}
+function clr(eid,iid){document.getElementById(eid).classList.remove('show');document.getElementById(iid).classList.remove('err');}
 
-            var status, message, barColor, barPercent;
+/* ── CALCULATE ── */
+function calculateNutrition(){
+  var cname=v('c-name'),ageStr=v('c-age'),wStr=v('c-weight');
+  var ok=true;
+  if(!cname){err('e-cname','c-name');ok=false;}else clr('e-cname','c-name');
+  var age=parseInt(ageStr);
+  if(!ageStr||age<1||age>13){err('e-cage','c-age');ok=false;}else clr('e-cage','c-age');
+  var wt=parseFloat(wStr);
+  if(!wStr||wt<5||wt>100){err('e-cweight','c-weight');ok=false;}else clr('e-cweight','c-weight');
+  if(!ok) return;
 
-            if (weight < lowerBound) {
-                status     = "underweight";
-                barColor   = "#ff9800";
-                barPercent = Math.max(10, Math.round((weight / idealWeight) * 50));
-                message    = "Your child is " + absDiff + " kg below the ideal weight for their age. A2 milk daily can help bridge this gap with quality protein and calcium for healthy growth.";
-            } else if (weight > upperBound) {
-                status     = "overweight";
-                barColor   = "#e91e63";
-                barPercent = Math.min(95, Math.round(50 + ((weight - idealWeight) / idealWeight) * 80));
-                message    = "Your child is " + absDiff + " kg above the ideal weight for their age. Focus on balanced nutrition with the right milk portions as recommended.";
-            } else {
-                status     = "healthy";
-                barColor   = "#4caf50";
-                barPercent = Math.round(40 + ((weight - lowerBound) / (upperBound - lowerBound)) * 20);
-                message    = "Great news! Your child's weight is in the healthy range for their age. Keep up the good nutrition habits with daily A2 milk.";
-            }
+  userData.childName=cname;userData.gender=selGenderVal;userData.age=age;userData.weight=wt;
 
-            var badgeLabels = {
-                underweight: "\u26a0\ufe0f Underweight",
-                healthy:     "\u2705 Healthy Weight",
-                overweight:  "\u26a0\ufe0f Overweight"
-            };
+  // Milk
+  var ml, grp;
+  if(age<=3){ml=350;grp='1–3 Years';}
+  else if(age<=8){ml=450;grp='4–8 Years';}
+  else{ml=600;grp='9–13 Years';}
 
-            var statusCard = document.getElementById("weightStatus");
-            statusCard.className = "weight-status-card " + status;
+  var protein=((ml/100)*3.2).toFixed(1);
+  var calcium=Math.round((ml/100)*120);
+  var vitA=Math.round((ml/100)*40);
+  var vitD=((ml/100)*0.4).toFixed(1);
 
-            document.getElementById("weightBadge").textContent   = badgeLabels[status];
-            document.getElementById("actualWeight").textContent  = weight + " kg";
-            document.getElementById("idealWeight").textContent   = idealWeight + " kg";
-            document.getElementById("weightDiff").textContent    = rawDiff > 0 ? "+" + diff + " kg" : diff + " kg";
-            document.getElementById("weightMessage").textContent = message;
+  document.getElementById('rAgeGroup').textContent=grp;
+  document.getElementById('rMilk').textContent=ml+' ml';
+  document.getElementById('rProtein').textContent=protein+'g';
+  document.getElementById('rCalcium').textContent=calcium+'mg';
+  document.getElementById('rVitA').textContent=vitA+'μg';
+  document.getElementById('rVitD').textContent=vitD+'μg';
 
-            var bar = document.getElementById("weightBarFill");
-            bar.style.width      = barPercent + "%";
-            bar.style.background = barColor;
+  // Weight
+  var ideal=WHO_IDEAL[age];
+  var diff=(wt-ideal).toFixed(1);
+  var abs=Math.abs(wt-ideal).toFixed(1);
+  var lo=ideal*.85,hi=ideal*1.15;
+  var status,msg,color,pct;
+  if(wt<lo){
+    status='underweight';color='#ff9800';
+    pct=Math.max(10,Math.round((wt/ideal)*50));
+    msg='Your child is '+abs+' kg below the ideal weight. A2 milk daily helps bridge this gap with quality protein and calcium for healthy growth. 💪';
+  } else if(wt>hi){
+    status='overweight';color='#e91e63';
+    pct=Math.min(92,Math.round(55+((wt-ideal)/ideal)*80));
+    msg='Your child is '+abs+' kg above the ideal weight. Focus on balanced nutrition with the right milk portions as recommended below. 🌿';
+  } else {
+    status='healthy';color='#4caf50';
+    pct=Math.round(42+((wt-lo)/(hi-lo))*18);
+    msg='Great news! Your child\'s weight is in the healthy range for their age. Keep up the good nutrition habits with daily A2 milk! 🎉';
+  }
+  var badges={underweight:'⚠️ Underweight',healthy:'✅ Healthy Weight',overweight:'⚠️ Above Ideal'};
 
-            statusCard.classList.remove("hidden");
-            document.getElementById("results").classList.remove("hidden");
-            document.getElementById("infoBox").classList.remove("hidden");
-            document.getElementById("whatsappBtn").classList.remove("hidden");
+  var wc=document.getElementById('weightCard');
+  wc.className='weight-card '+status;
+  document.getElementById('wcBadge').textContent=badges[status];
+  document.getElementById('actualW').textContent=wt+' kg';
+  document.getElementById('idealW').textContent=ideal+' kg';
+  document.getElementById('diffW').textContent=(parseFloat(diff)>0?'+':'')+diff+' kg';
+  document.getElementById('wcMsg').textContent=msg;
+  var bar=document.getElementById('wBar');
+  bar.style.width='0%';bar.style.background=color;
+  setTimeout(function(){bar.style.width=pct+'%';},200);
 
-            // WhatsApp link
-            var wMsg = "Hi, I'm " + userData.name + ". My child (" + age + " years, " + weight + "kg) needs " + milkIntake + "ml of A2 milk daily. Weight status: " + badgeLabels[status] + " (ideal: " + idealWeight + "kg). I'd like to know more.";
-            document.getElementById("whatsappBtn").href = WHATSAPP_BASE_URL + "&text=" + encodeURIComponent(wMsg);
+  // Summary
+  var rows=[
+    ['👤','Parent',userData.name],
+    ['📍','City',userData.city],
+    ['📱','WhatsApp',userData.phone],
+    ['🧒','Child\'s Name',userData.childName],
+    ['🎂','Age',age+' years'],
+    ['⚖️','Weight',wt+' kg'],
+    ['🥛','Daily A2 Milk',ml+' ml'],
+    ['💪','Protein',protein+'g'],
+    ['🦴','Calcium',calcium+'mg'],
+    ['📊','Weight Status',badges[status]]
+  ];
+  var sg=document.getElementById('summaryGrid');
+  sg.innerHTML='';
+  rows.forEach(function(r){
+    sg.innerHTML+='<div class="summary-row"><span class="summary-icon">'+r[0]+'</span><div class="summary-key">'+r[1]+'</div><div class="summary-val">'+r[2]+'</div></div>';
+  });
 
-            // Send ONE combined row — name + email + phone + all results
-            sendToSheets({
-                age:          age,
-                weight:       weight,
-                ageGroup:     ageGroup,
-                milkIntake:   milkIntake,
-                protein:      protein,
-                calcium:      calcium,
-                vitaminA:     vitaminA,
-                vitaminD:     vitaminD,
-                idealWeight:  idealWeight,
-                weightDiff:   diff,
-                weightStatus: status
-            });
+  // WhatsApp
+  var waMsg='Hello Klimom Team 👋, I just used the Child Nutrition Calculator!\n\n'
+    +'👤 Parent: '+userData.name+' ('+userData.city+')\n'
+    +'🧒 Child: '+userData.childName+' | '+age+' years | '+(selGenderVal||'Not specified')+'\n'
+    +'⚖️ Weight: '+wt+' kg (Ideal: '+ideal+' kg) | Status: '+badges[status]+'\n'
+    +'🥛 Daily A2 Milk Needed: '+ml+' ml\n'
+    +'💪 Protein: '+protein+'g | 🦴 Calcium: '+calcium+'mg\n\n'
+    +'Please send me the full personalised nutrition report. Thank you!';
+  document.getElementById('waBtn').href=WHATSAPP_BASE_URL+'&text='+encodeURIComponent(waMsg);
 
-            statusCard.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+  // Send
+  sendToSheets({age:age,weight:wt,ageGroup:grp,milkIntake:ml,protein:protein,calcium:calcium,vitaminA:vitA,vitaminD:vitD,idealWeight:ideal,weightDiff:diff,weightStatus:status});
 
-        // Single fetch — all data in one row
-        function sendToSheets(data) {
-            fetch(GOOGLE_SCRIPT_URL, {
-                method:  "POST",
-                mode:    "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    type:           "calculator_result",
-                    name:           userData.name,
-                    email:          userData.email,
-                    phone:          userData.phone,
-                    calculatorType: "Child Nutrition Calculator",
-                    childAge:       data.age,
-                    childWeight:    data.weight,
-                    ageGroup:       data.ageGroup,
-                    milkIntakeMl:   data.milkIntake,
-                    proteinG:       data.protein,
-                    calciumMg:      data.calcium,
-                    vitaminAUg:     data.vitaminA,
-                    vitaminDUg:     data.vitaminD,
-                    idealWeightKg:  data.idealWeight,
-                    weightDiffKg:   data.weightDiff,
-                    weightStatus:   data.weightStatus
-                })
-            })
-            .then(function() {
-                showToast("Results saved!");
-            })
-            .catch(function(err) {
-                console.error("Failed to send data:", err);
-            });
-        }
+  setStep(3);
+  document.getElementById('card2').style.display='none';
+  var rc=document.getElementById('resultsCard');
+  rc.classList.add('active');
+  setTimeout(function(){rc.scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
 
-        function showToast(message) {
-            var toast = document.createElement("div");
-            toast.className   = "toast";
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(function() {
-                toast.style.opacity = "0";
-                setTimeout(function() { toast.remove(); }, 400);
-            }, 2500);
-        }
-    </script>
+function showCard(id){
+  ['card1','card2'].forEach(function(c){document.getElementById(c).classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+
+function resetCalculator(){
+  setStep(1);selGenderVal='';
+  document.getElementById('resultsCard').classList.remove('active');
+  document.getElementById('card1').classList.add('active');
+  ['p-name','p-email','p-city','p-phone','c-name','c-age','c-weight'].forEach(function(id){document.getElementById(id).value='';});
+  document.querySelectorAll('.gpill').forEach(function(p){p.classList.remove('sel');});
+  window.scrollTo({top:document.getElementById('calculator').offsetTop-80,behavior:'smooth'});
+}
+
+function sendToSheets(data){
+  fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({type:'calculator_result',name:userData.name,email:userData.email,phone:userData.phone,city:userData.city,calculatorType:'Child Nutrition Calculator',childName:userData.childName,gender:userData.gender,childAge:data.age,childWeight:data.weight,ageGroup:data.ageGroup,milkIntakeMl:data.milkIntake,proteinG:data.protein,calciumMg:data.calcium,vitaminAUg:data.vitaminA,vitaminDUg:data.vitaminD,idealWeightKg:data.idealWeight,weightDiffKg:data.weightDiff,weightStatus:data.weightStatus})
+  }).then(function(){showToast('✅ Report saved! Check WhatsApp shortly.');}).catch(function(){});
+}
+
+/* ── TABS ── */
+function switchTab(el,id){
+  document.querySelectorAll('.tab-pill').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ── TOAST ── */
+function showToast(msg){
+  var t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},3000);
+}
+
+/* ── SCROLL REVEAL ── */
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+</script>
 </body>
 </html>
+
