@@ -3444,7 +3444,7 @@
 
             /* data */
             var SH =
-                "https://script.google.com/macros/s/AKfycbwY7JsSQD6SxOQhhTAcA-w6aUuQkeR6uqVnyAb8twa2jKwO6m4pVDUTh5EQRhA2jJX8uQ/exec";
+                "https://script.google.com/macros/s/AKfycbxdC64-YOrkZBprIx2953IfeggnyMo_aedqOBZBkX_xAV68HzfCjMdncoHZ4pny3vBs/exec";
             var WA = "https://api.whatsapp.com/send/?phone=919100741305";
             var WHO = {
                 1: 9.6,
@@ -3728,6 +3728,11 @@
                     "'s full personalised nutrition report!";
                 document.getElementById("wabtn").href =
                     WA + "&text=" + encodeURIComponent(wm);
+                var statLabel = {
+                    uw: "Underweight",
+                    ok: "Healthy",
+                    ov: "Overweight",
+                };
                 sendD({
                     age: age,
                     wt: wt,
@@ -3739,7 +3744,7 @@
                     vd: vd,
                     id: id,
                     diff: diff,
-                    stat: stat,
+                    stat: statLabel[stat],
                 });
             }
 
